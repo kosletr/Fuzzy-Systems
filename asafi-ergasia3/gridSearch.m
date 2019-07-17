@@ -124,7 +124,7 @@ for f = 1 : length(NF)
             anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 150, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
             
             % Inform the User about the current status
-            disp(['MODEL ', num2str(counter), ' of ', num2str(length(NF)*length(NR))]);
+            disp(['Model ', num2str(counter), ' of ', num2str(length(NF)*length(NR))]);
             disp(['Number of Features : ',num2str(NF(f))]);
             disp(['Number of Rules : ',num2str(NR(r))]) ;
             disp(['Fold Number: ',num2str(i)]); 

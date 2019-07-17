@@ -21,16 +21,16 @@ tic
 load avila.txt
 
 % Cluster Radius parameter for Subtractive Clustering Algorithm
-radius = [0.6 0.7 0.8 0.9 1.0] ;
+radius = [0.3 0.4 0.5 0.6] ;
 % Number of Rules produced by Subtractive Clustering Algorithm
-NR = zeros(size(avila,2), length(radius));
+NR = zeros(length(radius),1);
 
 % Initialize (cell) arrays for evaluation metrics
 error_matrix = cell(1, length(NR));
-overall_accuracy = zeros(1, length(NR));
+overall_accuracy = zeros(length(NR),1);
 producers_accuracy = cell(1, length(NR));
 users_accuracy = cell(1, length(NR));
-k_hat = zeros(1, length(NR));
+k_hat = zeros(length(NR),1);
 
 % Count the different output values
 tbl = tabulate(avila(:,end));
@@ -68,9 +68,7 @@ check_set = shuffleSet(check_set);
 
 %% Train 5 TSK Models
 
-modelNum = 5;
-
-for m = 1 : modelNum
+for m = 1 : length(radius)
     
     % Set Subtractive Clustering Options
     genfis_opt = genfisOptions('SubtractiveClustering','ClusterInfluenceRange',radius(m),'Verbose',0);
@@ -83,17 +81,21 @@ for m = 1 : modelNum
     
     for i = 1 : length(InitialFIS.output.mf)
         InitialFIS.output.mf(i).type = 'constant';
-        InitialFIS.output.mf(i).params = 10*(rand()-0.5); % range [-5, 5] %%%%%%%%
+        InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%
     end
     
-    %    Plot Inital Membership Functions
-    %%%    InputMembershipFuncPlotter(InitialFIS,2*modelNum);
-    %%%    title(['TSK model ', num2str(m), ': Input MF before training']);
+    % Plot Inital Membership Functions
+    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
+    title(['TSK model ', num2str(m), ': Input MF before training']);
     
     %% Train TSK Model
     
+    % Inform the User about the current status
+    disp(['Model ', num2str(m), ' of ', num2str(length(NR))]);
+    fprintf('Initiating FIS Training.. \n\n');
+    
     % Set Training Options
-    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 400, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 50, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
     
     % Train generated FIS
     [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
@@ -105,31 +107,32 @@ for m = 1 : modelNum
     % Output must be integer for classifying
     y_hat = round(y_hat);
     
-    %Special cases if the output is 1 or 12 and the round leads to 0 or 13
+    % Special cases if the output is 1 or 12 and the round leads to 0 or 13
     limitA = tbl(1,1);
-    limitB = tbl(1,end);
+    limitB = tbl(end,1);
     y_hat(y_hat < limitA) = limitA;
     y_hat(y_hat > limitB) = limitB;
+    
     %% Metrics Calculation
     
     % Total Number of classified values compared to truth values
-    N = length(check_data);
+    N = length(check_set);
     
     % Error Matrix
     error_matrix{m} = confusionmat(y, y_hat);
     
     % Overall Accuracy
-    overall_accuracy(m) = diag(error_matrix{m}) / N;
+    overall_accuracy(m) = sum(diag(error_matrix{m})) / N;
     
     % Producer's Accuracy Initialization
-    PA = zeros(1, length(y));
+    PA = zeros(limitB , 1);
     
     % User's Accuracy Initialization
-    UA = zeros(1, length(y));
+    UA = zeros(limitB , 1);
     
-    for i = 1 : length(y)
-        PA(i) = error_matrix(i, i) / sum(error_matrix(:, i));
-        UA(i) = error_matrix(i, i) / sum(error_matrix(i, :));
+    for i = 1 : limitB
+        PA(i) = error_matrix{m}(i, i) / sum(error_matrix{m}(:, i));
+        UA(i) = error_matrix{m}(i, i) / sum(error_matrix{m}(i, :));
     end
     % Producer's Accuracy
     producers_accuracy{m} = PA;
@@ -137,37 +140,35 @@ for m = 1 : modelNum
     users_accuracy{m} = UA;
     
     % k_hat parameters
-    XirXic = zeros(length(y),1);
-    for i=1:length(y)
-        XirXic(i) = ( sum(error_matrix(i,:)) * sum(error_matrix(:,i)) ) / N^2 ;
+    XirXic = zeros( limitB , 1 );
+    for i = 1 : limitB
+        XirXic(i) = ( sum(error_matrix{m}(i,:)) * sum(error_matrix{m}(:,i)) ) / N^2 ;
     end
     
     % k_hat
-    k_hat(r) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
+    k_hat(m) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
     
     %    Plot Final Membership Functions
-    %%%    InputMembershipFuncPlotter(InitialFIS,2*modelNum);
+    %%%    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
     %%%    title(['TSK model ', num2str(m), ': Input MF after training']);
     
     figure;
-    plot(1:length(trainError), trainError, 1:length(trnError), chkError);
-    title(['TSK model ', m, ': Learning Curve']);
+    plot(1:length(trnError), trnError, 1:length(trnError), chkError);
+    title(['TSK model ', num2str(m), ': Learning Curve']);
     xlabel('Iterations');
     ylabel('Error');
     legend('Training Set', 'Check Set');
-    saveplot(['learning_curve_', num2str(m)]);
+    SavePlot(['learning_curve_', num2str(m)]);
     
 end
 
 %% Plot Metrics
 
-MetricsPlotter(NR,overall_accuracy,k_hat);
+MetricsPlotter(radius,overall_accuracy,k_hat);
 
-save('error_matrix', 'error_matrix');
-save('overall_accuracy', 'overall_accuracy');
-save('k_hat', 'k_hat');
-save('producers_accuracy', 'producers_accuracy');
-save('users_accuracy', 'users_accuracy');
+%% Save Metrics Information
+
+save('metrics', 'error_matrix','overall_accuracy','k_hat','producers_accuracy','users_accuracy');
 
 % Display Elasped Time
 toc
@@ -234,7 +235,7 @@ function InputMembershipFuncPlotter(FIS,MFnumber)
 % Subplot with Membership Functions
 figure;
 
-for i = 1:length(MFnumber)
+for i = 1 : MFnumber
     
     [x,mf] = plotmf(FIS,'input',i);
     plot(x,mf);
@@ -246,23 +247,23 @@ xlabel('Inputs');
 end
 
 %% Function used to Plot the Metrics
-function MetricsPlotter(NR,overall_accuracy,k_hat)
+function MetricsPlotter(radius,overall_accuracy,k_hat)
 
 % Plot the Metrics
 
-% Plot Overall Accuracy
+% Bar Plot - Overall Accuracy metric
 figure;
-bar(NR(1:length(NR)), overall_accuracy);
+bar(radius, overall_accuracy);
 title('Overall accuracy with regards to number of rules');
-xlabel('Number of Rules');
+xlabel('Radius');
 SavePlot('overall_accuracy_metric');
 
 
-% Plot k_hat metric
+% Bar Plot - k_hat metric
 figure;
-bar(NR(1:length(NR)), k_hat);
-title('\hat{k} value with regards to number of rules');
-xlabel('Number of Rules');
+bar(radius, k_hat);
+title('$\hat{k}$ value with regards to number of rules','interpreter','latex');
+xlabel('Radius');
 SavePlot('k_hat_metric');
 
 end
