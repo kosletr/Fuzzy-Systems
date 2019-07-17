@@ -142,7 +142,7 @@ for r = 1 : length(NR)
     output(output > 4) = 4;
  
     %% METRICS
-    N = length(check_data); %total number of classified values compared to truth values
+    N = length(check_data); % total number of classified values compared to truth values
  
     % Error matrix
     error_matrices{r} = confusionmat(check_data(:, 8), output);

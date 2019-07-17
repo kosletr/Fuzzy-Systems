@@ -153,7 +153,7 @@ end
 
 %% Model Errors
 fprintf('The Mean Error for every Model respectively: \n');
-MeanModelError
+disp(MeanModelError)
 
 %% Plot the Errors
 
@@ -172,7 +172,7 @@ for i=1:length(NF)
     
 end
 
-savePlot('Subplots_Mean_Errors');
+SavePlot('Subplots_Mean_Errors');
 
 
 % 3D Plot of All Model Errors
@@ -185,7 +185,7 @@ xticklabels(string(NR));
 zlabel('Mean square error');
 title('3D Plot of All Model Errors for different Features and Rules');
 
-savePlot('3Dplot_Mean_Error');
+SavePlot('3Dplot_Mean_Error');
 
 %% Best Model Decision
 
@@ -211,7 +211,7 @@ save('best_model.mat','features_number','rules_number','features_indices')
 toc
 
 %% Function to automatically save plots in high resolution
-function savePlot(name)
+function SavePlot(name)
 
 % Resize current figure to fullscreen for higher resolution image
 set(gcf, 'Position', get(0, 'Screensize'));

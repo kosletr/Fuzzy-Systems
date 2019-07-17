@@ -71,7 +71,7 @@ InitialFIS = genfis(training_set(:, 1:end-1), training_set(:, end), opt);
 % Plot input Membership Functions
 InputMembershipFuncPlotter(InitialFIS);
 sgtitle(['TSK Model ', num2str(k) ,' : Membership Functions before training']);
-savePlot(join(['TSK_' num2str(k) '_MF_before_Training']));
+SavePlot(join(['TSK_' num2str(k) '_MF_before_Training']));
 pause(0.01);
 
 %% Train TSK Model
@@ -109,7 +109,7 @@ MetricsPlotter(y,y_hat,trnError,chkError,k);
 % Plot trained input Membership Functions
 InputMembershipFuncPlotter(chkFIS)
 sgtitle(['TSK Model ', num2str(k) ,' : Membership Functions after training']);
-savePlot(join(['TSK_' num2str(k) '_MF_after_Training']));
+SavePlot(join(['TSK_' num2str(k) '_MF_after_Training']));
 
 % Display Metrics
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', MSE, RMSE, R_sqr, NMSE, NDEI)
@@ -125,18 +125,18 @@ figure;
 plot(1:length(y),y,'*r',1:length(y),y_hat, '.b');
 title('Output: Net Hourly Electrical Energy Output');
 legend('Reference Outputs','Model Outputs');
-savePlot(join(['TSK_' num2str(k) '_Output']));
+SavePlot(join(['TSK_' num2str(k) '_Output']));
 
 figure;
 plot(y - y_hat);
 title('Prediction Errors');
-savePlot(join(['TSK_' num2str(k) '_Prediction_Errors']));
+SavePlot(join(['TSK_' num2str(k) '_Prediction_Errors']));
 
 figure;
 plot(1:length(trnError),trnError,1:length(trnError),chkError);
 title('Learning Curve');
 legend('Traning Set', 'Check Set');
-savePlot(join(['TSK_' num2str(k) '_Learning_Curve']));
+SavePlot(join(['TSK_' num2str(k) '_Learning_Curve']));
 
 end
 
@@ -160,7 +160,7 @@ end
 end
 
 %% Function to automatically save plots in high resolution
-function savePlot(name)
+function SavePlot(name)
 
 % Resize current figure to fullscreen for higher resolution image
 set(gcf, 'Position', get(0, 'Screensize'));
