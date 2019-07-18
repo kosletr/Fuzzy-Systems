@@ -21,9 +21,9 @@ tic
 load avila.txt
 
 % Cluster Radius parameter for Subtractive Clustering Algorithm
-radius = [0.3 0.4 0.5 0.6] ;
+radius = [0.3;0.4;0.5;0.6] ;
 % Number of Rules produced by Subtractive Clustering Algorithm
-NR = zeros(length(radius),1);
+NR = zeros(size(radius,1),1);
 
 % Initialize (cell) arrays for evaluation metrics
 error_matrix = cell(1, length(NR));
@@ -66,9 +66,31 @@ training_set = shuffleSet(training_set);
 validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
+%% Data Normalization (Normalize each feautre separately)
+
+for i = 1 : size(training_set, 2) - 1 % for every feature
+    
+    % Find min and max of the feature
+    training_set_min = min(training_set(:, i));
+    training_set_max = max(training_set(:, i));
+    
+    % Normalize training set
+    training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+    training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+    
+    % Normalize validation set based on the training set data
+    validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+    validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+    
+    % Normalize check set based on the training set data
+    check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+    check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+
+end
+
 %% Train 5 TSK Models
 
-for m = 1 : length(radius)
+for m = 1 : length(NR)
     
     % Set Subtractive Clustering Options
     genfis_opt = genfisOptions('SubtractiveClustering','ClusterInfluenceRange',radius(m),'Verbose',0);
@@ -81,11 +103,11 @@ for m = 1 : length(radius)
     
     for i = 1 : length(InitialFIS.output.mf)
         InitialFIS.output.mf(i).type = 'constant';
-        InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%
+        %InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
     
     % Plot Inital Membership Functions
-    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
+    InputMembershipFuncPlotter(InitialFIS,2*length(NR));
     title(['TSK model ', num2str(m), ': Input MF before training']);
     
     %% Train TSK Model
@@ -95,7 +117,7 @@ for m = 1 : length(radius)
     fprintf('Initiating FIS Training.. \n\n');
     
     % Set Training Options
-    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 50, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 250, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
     
     % Train generated FIS
     [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
@@ -149,7 +171,7 @@ for m = 1 : length(radius)
     k_hat(m) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
     
     % Plot Final Membership Functions
-    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
+    InputMembershipFuncPlotter(chkFIS,2*length(NR));
     title(['TSK model ', num2str(m), ': Input MF after training']);
     
     figure;
@@ -263,7 +285,7 @@ SavePlot('overall_accuracy_metric');
 % Bar Plot - k_hat metric
 figure;
 bar(radius, k_hat);
-title('$\hat{k}$ value with regards to number of rules','interpreter','latex');
+title('\textbf{ $\hat{k}$ value with regards to number of rules}','interpreter','latex');
 xlabel('Radius');
 SavePlot('k_hat_metric');
 

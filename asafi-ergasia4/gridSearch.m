@@ -143,6 +143,11 @@ for f = 1 : length(NF)
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
             
+            for j = 1 : length(InitialFIS.output.mf)
+                InitialFIS.output.mf(j).type = 'constant';
+                %InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            end
+            
             % Set the validation data option to avoid overfitting
             anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 150, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
             
