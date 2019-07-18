@@ -148,9 +148,9 @@ for m = 1 : length(radius)
     % k_hat
     k_hat(m) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
     
-    %    Plot Final Membership Functions
-    %%%    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
-    %%%    title(['TSK model ', num2str(m), ': Input MF after training']);
+    % Plot Final Membership Functions
+    InputMembershipFuncPlotter(InitialFIS,2*length(radius));
+    title(['TSK model ', num2str(m), ': Input MF after training']);
     
     figure;
     plot(1:length(trnError), trnError, 1:length(trnError), chkError);
@@ -232,7 +232,7 @@ end
 %% Function used to Plot input Membership Functions of the given FIS
 function InputMembershipFuncPlotter(FIS,MFnumber)
 
-% Subplot with Membership Functions
+% Plot Membership Functions
 figure;
 
 for i = 1 : MFnumber
@@ -242,6 +242,7 @@ for i = 1 : MFnumber
     hold on;
     
 end
+
 xlabel('Inputs');
 
 end
