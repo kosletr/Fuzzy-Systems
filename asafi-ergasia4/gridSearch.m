@@ -145,7 +145,7 @@ for f = 1 : length(NF)
             
             for j = 1 : length(InitialFIS.output.mf)
                 InitialFIS.output.mf(j).type = 'constant';
-                %InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                %InitialFIS.output.mf(j).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             end
             
             % Set the validation data option to avoid overfitting

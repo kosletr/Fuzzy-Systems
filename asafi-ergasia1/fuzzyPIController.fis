@@ -1,5 +1,5 @@
 [System]
-Name='fuzzyPIControler'
+Name='fuzzyPIController'
 Type='mamdani'
 Version=2.0
 NumInputs=2
@@ -7,7 +7,7 @@ NumOutputs=1
 NumRules=0
 AndMethod='min'
 OrMethod='max'
-ImpMethod='min'
+ImpMethod='prod'
 AggMethod='max'
 DefuzzMethod='centroid'
 
