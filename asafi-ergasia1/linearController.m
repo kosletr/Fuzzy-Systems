@@ -7,7 +7,7 @@ clear;
 close all;
 
 %% Set value of Zero
-z = -0.3 % close to pole -0.1
+z = -0.3; % close to pole -0.1
 c = -z;
 
 %% Insert Open Loop System
@@ -22,14 +22,14 @@ figure;
 rlocus(sys_open_loop)
 
 %% Choose Gains
-Ka = 1
-Kp = 1
+Ka = 1;
+Kp = 1;
 
-K=25*Ka*Kp
+K=25*Ka*Kp;
 
 %% Insert Closed Loop System
-sys_open_loop = K * sys_open_loop
-sys_closed_loop = feedback(sys_open_loop, 1, -1)
+sys_open_loop = K * sys_open_loop;
+sys_closed_loop = feedback(sys_open_loop, 1, -1);
 
 %% Step Response Plot
 figure;
@@ -38,8 +38,8 @@ step(sys_closed_loop);
 %% Check System Specifications
 
 sysinfo = stepinfo(sys_closed_loop);
-overShoot = sysinfo.Overshoot;
-riseTime = sysinfo.RiseTime;
+overShoot = sysinfo.Overshoot
+riseTime = sysinfo.RiseTime
 
 if riseTime > 0.6
     fprintf('Rise Time is : %d. Try again.',sysinfo.RiseTime);
@@ -49,4 +49,4 @@ if overShoot > 8
 end
 
 %% Calculate K_I
-Ki = c*Kp
+Ki = c*Kp;

@@ -1,38 +1,31 @@
 Model {
-  Name			  "FuzzyPICon"
+  Name			  "FuzzyPIConScenario2"
   Version		  9.3
   SavedCharacterEncoding  "windows-1253"
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.6"
+    ComputedModelVersion    "1.7"
     NumModelReferences	    0
-    NumTestPointedSignals   4
+    NumTestPointedSignals   3
     TestPointedSignal {
       SignalName	      "control input"
-      FullBlockPath	      "FuzzyPICon/FZ-PI Controller"
-      LogSignal		      1
-      MaxPoints		      5000
-      Decimation	      2
-    }
-    TestPointedSignal {
-      SignalName	      "reference"
-      FullBlockPath	      "FuzzyPICon/Step1"
+      FullBlockPath	      "FuzzyPIConScenario2/FZ-PI Controller"
       LogSignal		      1
       MaxPoints		      5000
       Decimation	      2
     }
     TestPointedSignal {
       SignalName	      "error"
-      FullBlockPath	      "FuzzyPICon/Sum2"
+      FullBlockPath	      "FuzzyPIConScenario2/Sum2"
       LogSignal		      1
       MaxPoints		      5000
       Decimation	      2
     }
     TestPointedSignal {
       SignalName	      ""
-      FullBlockPath	      "FuzzyPICon/System"
+      FullBlockPath	      "FuzzyPIConScenario2/System"
       LogSignal		      1
       MaxPoints		      5000
       Decimation	      2
@@ -49,16 +42,16 @@ Model {
     NumExternalFileReferences 1
     ExternalFileReference {
       Reference		      "fuzblock/Fuzzy Logic \nController"
-      Path		      "FuzzyPICon/FZ-PI Controller/Fuzzy PI Controller"
-      SID		      "12"
+      Path		      "FuzzyPIConScenario2/FZ-PI Controller/Fuzzy PI Controller"
+      SID		      "7"
       Type		      "LIBRARY_BLOCK"
     }
     OrderedModelArguments   1
   }
   DiagnosticSuppressor	  "on"
   LogicAnalyzerPlugin	  "on"
-  LogicAnalyzerSignalOrdering "591fb9c7-ce36-4346-be04-f9fdbc765426,57865cd8-2de3-4edd-964f-86dc736ebf6e,ff1446f3-9998"
-  "-4fc7-b872-4300ce8f7328,ea0ee177-f934-4cb4-b695-dcf9dd35d7ce"
+  LogicAnalyzerSignalOrdering "6826ba55-d383-4eb1-a829-21d225758932,556b48ee-a90b-40eb-b5dc-605fc91328ef,eba38db0-7cbc"
+  "-4169-bdcd-0de638f60d3a"
   NotesPlugin		  "on"
   SLCCPlugin		  "on"
   WebScopes_FoundationPlugin "on"
@@ -105,11 +98,11 @@ Model {
 	$ObjectID		5
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
-	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"20"
+	ViewObjType		"SimulinkTopLevel"
+	LoadSaveID		"0"
 	Extents			[1807.0, 873.0]
-	ZoomFactor		[1.0]
-	Offset			[-2.3999999999999773, -130.8]
+	ZoomFactor		[1.4999999999999998]
+	Offset			[-347.01249806880963, 61.466666666666612]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -141,15 +134,15 @@ Model {
     }
   }
   HideAutomaticNames	  on
-  Created		  "Thu Jul 18 17:37:29 2019"
+  Created		  "Fri Jul 19 12:07:36 2019"
   Creator		  "Kostas"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Kostas"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 19 12:07:07 2019"
-  RTWModifiedTimeStamp	  485438626
-  ModelVersionFormat	  "1.%<AutoIncrement:6>"
+  LastModifiedDate	  "Fri Jul 19 13:09:31 2019"
+  RTWModifiedTimeStamp	  485442570
+  ModelVersionFormat	  "1.%<AutoIncrement:7>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "disabled"
@@ -205,12 +198,12 @@ Model {
     $PropName		    "DataLoggingOverride"
     $ObjectID		    7
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
-    model_		    "FuzzyPICon"
+    model_		    "FuzzyPIConScenario2"
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
       Dimension		      1
-      Cell		      "FuzzyPICon"
+      Cell		      "FuzzyPIConScenario2"
       PropName		      "logAsSpecifiedByModels_"
     }
     Array {
@@ -226,11 +219,11 @@ Model {
     $ClassName		    "Simulink.HMI.InstrumentedSignals"
     Array {
       Type		      "Struct"
-      Dimension		      4
+      Dimension		      3
       MATStruct {
-	UUID			"591fb9c7-ce36-4346-be04-f9fdbc765426"
+	UUID			"556b48ee-a90b-40eb-b5dc-605fc91328ef"
 	BlockPath_		"FZ-PI Controller"
-	SID_			"20"
+	SID_			"1"
 	SubPath_		""
 	OutputPortIndex_	[1.0]
 	LogicalPortIndex_	[0.0]
@@ -251,9 +244,9 @@ Model {
 	VisualType_		""
       }
       MATStruct {
-	UUID			"ea0ee177-f934-4cb4-b695-dcf9dd35d7ce"
+	UUID			"eba38db0-7cbc-4169-bdcd-0de638f60d3a"
 	BlockPath_		"System"
-	SID_			"47"
+	SID_			"23"
 	SubPath_		""
 	OutputPortIndex_	[1.0]
 	LogicalPortIndex_	[0.0]
@@ -274,32 +267,9 @@ Model {
 	VisualType_		""
       }
       MATStruct {
-	UUID			"ff1446f3-9998-4fc7-b872-4300ce8f7328"
+	UUID			"6826ba55-d383-4eb1-a829-21d225758932"
 	BlockPath_		"Sum2"
-	SID_			"46"
-	SubPath_		""
-	OutputPortIndex_	[1.0]
-	LogicalPortIndex_	[0.0]
-	SignalName_		""
-	SubSysPath_		""
-	Decimation_		[1.0]
-	MaxPoints_		[0.0]
-	TargetBufferedStreaming_ [0.0]
-	IsFrameBased_		[0.0]
-	DomainType_		""
-	Array {
-	  Type			  "Struct"
-	  Dimension		  1
-	  MATStruct {
-	  }
-	  PropName		  "DomainParams_"
-	}
-	VisualType_		""
-      }
-      MATStruct {
-	UUID			"57865cd8-2de3-4edd-964f-86dc736ebf6e"
-	BlockPath_		"Step1"
-	SID_			"45"
+	SID_			"22"
 	SubPath_		""
 	OutputPortIndex_	[1.0]
 	LogicalPortIndex_	[0.0]
@@ -364,7 +334,7 @@ Model {
 	  Description		  ""
 	  Components		  []
 	  StartTime		  "0.0"
-	  StopTime		  "10.0"
+	  StopTime		  "20.0"
 	  AbsTol		  "auto"
 	  AutoScaleAbsTol	  on
 	  FixedStep		  "auto"
@@ -1069,7 +1039,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition    [ 145, 177, 1135, 847 ]
+      ConfigPrmDlgPosition    [ 145, 124, 1135, 794 ]
       ExtraOptions	      ""
     }
     PropName		    "ConfigurationSets"
@@ -1164,6 +1134,21 @@ Model {
       CodeGenStateStorageClass "Auto"
     }
     Block {
+      BlockType		      Demux
+      Outputs		      "4"
+      DisplayOption	      "none"
+      BusSelectionMode	      off
+    }
+    Block {
+      BlockType		      FromWorkspace
+      VariableName	      "simulink_input"
+      OutDataTypeStr	      "Inherit: auto"
+      SampleTime	      "-1"
+      Interpolate	      on
+      ZeroCross		      off
+      OutputAfterFinalValue   "Extrapolation"
+    }
+    Block {
       BlockType		      Gain
       Gain		      "1"
       Multiplication	      "Element-wise(K.*u)"
@@ -1196,6 +1181,12 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchInputForFeedbackSignals off
       Interpolate	      on
+    }
+    Block {
+      BlockType		      ManualSwitch
+      CurrentSetting	      "1"
+      varsize		      off
+      SampleTime	      "-1"
     }
     Block {
       BlockType		      Mux
@@ -1246,15 +1237,6 @@ Model {
     Block {
       BlockType		      Scope
       DefaultConfigurationName "Simulink.scopes.TimeScopeBlockCfg"
-    }
-    Block {
-      BlockType		      Step
-      Time		      "1"
-      Before		      "0"
-      After		      "1"
-      SampleTime	      "-1"
-      VectorParams1D	      on
-      ZeroCross		      on
     }
     Block {
       BlockType		      SubSystem
@@ -1326,9 +1308,9 @@ Model {
     }
   }
   System {
-    Name		    "FuzzyPICon"
+    Name		    "FuzzyPIConScenario2"
     Location		    [-7, -7, 1543, 831]
-    Open		    off
+    Open		    on
     PortBlocksUseCompactNotation off
     SetExecutionDomain	    off
     ExecutionDomainType	    "Deduce"
@@ -1342,17 +1324,17 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "175"
+    ZoomFactor		    "150"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "49"
+    SIDHighWatermark	    "28"
     SimulinkSubDomain	    "Simulink"
     Block {
       BlockType		      SubSystem
       Name		      "FZ-PI Controller"
-      SID		      "20"
+      SID		      "1"
       Ports		      [1, 1]
-      Position		      [370, 12, 465, 68]
-      ZOrder		      650
+      Position		      [-5, 247, 90, 303]
+      ZOrder		      657
       RequestExecContextInheritance off
       Port {
 	PortNumber		1
@@ -1360,8 +1342,8 @@ Model {
       }
       System {
 	Name			"FZ-PI Controller"
-	Location		[-7, -7, 1543, 831]
-	Open			on
+	Location		[110, 235, 998, 768]
+	Open			off
 	PortBlocksUseCompactNotation off
 	SetExecutionDomain	off
 	ExecutionDomainType	"Deduce"
@@ -1380,7 +1362,7 @@ Model {
 	Block {
 	  BlockType		  Inport
 	  Name			  "E"
-	  SID			  "1"
+	  SID			  "2"
 	  Position		  [155, 150, 200, 170]
 	  ZOrder		  649
 	  IconDisplay		  "Port number"
@@ -1388,7 +1370,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "1/T"
-	  SID			  "8"
+	  SID			  "3"
 	  Position		  [575, 237, 620, 283]
 	  ZOrder		  655
 	  Gain			  "1/0.01"
@@ -1399,7 +1381,7 @@ Model {
 	Block {
 	  BlockType		  Delay
 	  Name			  "Delay"
-	  SID			  "3"
+	  SID			  "4"
 	  Ports			  [1, 1]
 	  Position		  [355, 243, 390, 277]
 	  ZOrder		  651
@@ -1410,7 +1392,7 @@ Model {
 	Block {
 	  BlockType		  Delay
 	  Name			  "Delay1"
-	  SID			  "17"
+	  SID			  "5"
 	  Ports			  [1, 1]
 	  Position		  [1165, 243, 1200, 277]
 	  ZOrder		  664
@@ -1422,7 +1404,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "Denormalization"
-	  SID			  "15"
+	  SID			  "6"
 	  Position		  [1050, 187, 1095, 233]
 	  ZOrder		  662
 	  Gain			  "50"
@@ -1433,7 +1415,7 @@ Model {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Fuzzy PI Controller"
-	  SID			  "12"
+	  SID			  "7"
 	  Ports			  [1, 1]
 	  Position		  [785, 182, 855, 238]
 	  ZOrder		  659
@@ -1458,7 +1440,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K"
-	  SID			  "14"
+	  SID			  "8"
 	  Position		  [975, 187, 1020, 233]
 	  ZOrder		  661
 	  Gain			  "10"
@@ -1469,7 +1451,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_d = a*K_e"
-	  SID			  "7"
+	  SID			  "9"
 	  Position		  [490, 237, 535, 283]
 	  ZOrder		  654
 	  Gain			  "0.25*1"
@@ -1480,7 +1462,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "K_e"
-	  SID			  "5"
+	  SID			  "10"
 	  Position		  [520, 137, 565, 183]
 	  ZOrder		  652
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
@@ -1501,7 +1483,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "Normalization"
-	  SID			  "2"
+	  SID			  "12"
 	  Position		  [235, 137, 280, 183]
 	  ZOrder		  650
 	  Gain			  "1/50"
@@ -1512,7 +1494,7 @@ Model {
 	Block {
 	  BlockType		  Saturate
 	  Name			  "Saturation"
-	  SID			  "10"
+	  SID			  "13"
 	  Ports			  [1, 1]
 	  Position		  [660, 145, 690, 175]
 	  ZOrder		  657
@@ -1521,7 +1503,7 @@ Model {
 	Block {
 	  BlockType		  Saturate
 	  Name			  "Saturation2"
-	  SID			  "9"
+	  SID			  "14"
 	  Ports			  [1, 1]
 	  Position		  [660, 245, 690, 275]
 	  ZOrder		  656
@@ -1530,7 +1512,7 @@ Model {
 	Block {
 	  BlockType		  Sum
 	  Name			  "Sum"
-	  SID			  "6"
+	  SID			  "15"
 	  Ports			  [2, 1]
 	  Position		  [430, 250, 450, 270]
 	  ZOrder		  653
@@ -1562,7 +1544,7 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "T"
-	  SID			  "13"
+	  SID			  "17"
 	  Position		  [900, 187, 945, 233]
 	  ZOrder		  660
 	  Gain			  "0.01"
@@ -1573,13 +1555,13 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "U-PI"
-	  SID			  "19"
+	  SID			  "18"
 	  Position		  [1255, 203, 1285, 217]
 	  ZOrder		  665
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  23
+	  ZOrder		  1
 	  SrcBlock		  "Saturation2"
 	  SrcPort		  1
 	  Points		  [25, 0; 0, -40]
@@ -1587,14 +1569,14 @@ Model {
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  24
+	  ZOrder		  2
 	  SrcBlock		  "Mux"
 	  SrcPort		  1
 	  DstBlock		  "Fuzzy PI Controller"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  25
+	  ZOrder		  3
 	  SrcBlock		  "Saturation"
 	  SrcPort		  1
 	  Points		  [25, 0; 0, 40]
@@ -1602,24 +1584,24 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  28
+	  ZOrder		  4
 	  SrcBlock		  "Sum1"
 	  SrcPort		  1
 	  Points		  [78, 0]
 	  Branch {
-	    ZOrder		    27
+	    ZOrder		    5
 	    Points		    [0, 50]
 	    DstBlock		    "Delay1"
 	    DstPort		    1
 	  }
 	  Branch {
-	    ZOrder		    26
+	    ZOrder		    6
 	    DstBlock		    "U-PI"
 	    DstPort		    1
 	  }
 	}
 	Line {
-	  ZOrder		  29
+	  ZOrder		  7
 	  SrcBlock		  "Delay1"
 	  SrcPort		  1
 	  Points		  [-25, 0]
@@ -1627,7 +1609,7 @@ Model {
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  30
+	  ZOrder		  8
 	  SrcBlock		  "K_d = a*K_e"
 	  SrcPort		  1
 	  DstBlock		  "1/T"
@@ -1635,7 +1617,7 @@ Model {
 	}
 	Line {
 	  Name			  "de"
-	  ZOrder		  31
+	  ZOrder		  9
 	  Labels		  [1, 1]
 	  SrcBlock		  "Sum"
 	  SrcPort		  1
@@ -1643,82 +1625,82 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  32
+	  ZOrder		  10
 	  SrcBlock		  "E"
 	  SrcPort		  1
 	  DstBlock		  "Normalization"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  33
+	  ZOrder		  11
 	  SrcBlock		  "K_e"
 	  SrcPort		  1
 	  DstBlock		  "Saturation"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  34
+	  ZOrder		  12
 	  SrcBlock		  "T"
 	  SrcPort		  1
 	  DstBlock		  "K"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  35
+	  ZOrder		  13
 	  SrcBlock		  "Denormalization"
 	  SrcPort		  1
 	  DstBlock		  "Sum1"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  36
+	  ZOrder		  14
 	  SrcBlock		  "Delay"
 	  SrcPort		  1
 	  DstBlock		  "Sum"
 	  DstPort		  2
 	}
 	Line {
-	  ZOrder		  37
+	  ZOrder		  15
 	  SrcBlock		  "Fuzzy PI Controller"
 	  SrcPort		  1
 	  DstBlock		  "T"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  38
+	  ZOrder		  16
 	  SrcBlock		  "1/T"
 	  SrcPort		  1
 	  DstBlock		  "Saturation2"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  39
+	  ZOrder		  17
 	  SrcBlock		  "K"
 	  SrcPort		  1
 	  DstBlock		  "Denormalization"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  44
+	  ZOrder		  18
 	  SrcBlock		  "Normalization"
 	  SrcPort		  1
 	  Points		  [22, 0]
 	  Branch {
-	    ZOrder		    43
+	    ZOrder		    19
 	    Points		    [0, 100]
 	    DstBlock		    "Delay"
 	    DstPort		    1
 	  }
 	  Branch {
-	    ZOrder		    42
+	    ZOrder		    20
 	    Points		    [133, 0]
 	    Branch {
-	      ZOrder		      41
+	      ZOrder		      21
 	      DstBlock		      "K_e"
 	      DstPort		      1
 	    }
 	    Branch {
-	      ZOrder		      40
+	      ZOrder		      22
 	      DstBlock		      "Sum"
 	      DstPort		      1
 	    }
@@ -1727,12 +1709,19 @@ Model {
       }
     }
     Block {
+      BlockType		      ManualSwitch
+      Name		      "Manual Switch"
+      SID		      "28"
+      Position		      [-150, 257, -120, 293]
+      ZOrder		      666
+    }
+    Block {
       BlockType		      Mux
       Name		      "Mux1"
-      SID		      "43"
+      SID		      "19"
       Ports		      [2, 1]
-      Position		      [830, 11, 835, 49]
-      ZOrder		      654
+      Position		      [455, 236, 460, 274]
+      ZOrder		      661
       ShowName		      off
       Inputs		      "2"
       DisplayOption	      "bar"
@@ -1740,54 +1729,175 @@ Model {
     Block {
       BlockType		      Scope
       Name		      "Scope"
-      SID		      "44"
+      SID		      "20"
       Ports		      [1]
-      Position		      [870, 14, 900, 46]
-      ZOrder		      653
+      Position		      [500, 237, 530, 273]
+      ZOrder		      660
       ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
       "gr.Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('S"
       "ources','WiredSimulink',true),extmgr.Configuration('Visuals','Time Domain',true,'SerializedDisplays',{struct('Mi"
-      "nYLimReal','-6.40558','MaxYLimReal','57.65021','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.65021','L"
-      "egendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686"
-      "274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.6235"
-      "29411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.7176"
-      "47058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<Signal"
-      "Label>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'reference','System"
-      "'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-6.40558','MaxYLimReal','"
-      "57.65021','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.65021','LegendVisibility','off','XGrid',true,'"
-      "YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.6862"
-      "74509803922],'ColorOrder',[0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;1 1 0.066"
-      "6666666666667;0.717647058823529 0.274509803921569 1;0.392156862745098 0.831372549019608 0.0745098039215686;0.058"
-      "8235294117647 1 1;1 0.0745098039215686 0.650980392156863])),extmgr.Configuration('Tools','Plot Navigation',true,"
-      "'PreviousAutoscale','XY'),extmgr.Configuration('Tools','Measurements',true,'Version','2019a','Measurements',stru"
-      "ct('traceselector',struct('Line',2),'bilevel',struct('StateLevelsSource','Auto','StateLevels',[0.256223143246313"
-      " 49.963512933031],'PercentStateLevelTolerance',2,'PercentReferenceLevels',[10 50 90],'SettlingSeekDuration',0.02"
-      ",'SettingsPanelOpen',0,'TransitionsPanelOpen',1,'AberrationsPanelOpen',1,'CyclesPanelOpen',0)))),'Version','2019"
-      "a','Position',[8.2 -15 1539.2 792],'OpenAtMdlStart',true)"
+      "nYLimReal','-6.4321','MaxYLimReal','57.88888','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.88888','Le"
+      "gendVisibility','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.6862"
+      "74509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.62352"
+      "9411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.71764"
+      "7058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalL"
+      "abel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'Manual Switch','Sys"
+      "tem'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-6.4321','MaxYLimReal'"
+      ",'57.88888','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.88888','LegendVisibility','Off','XGrid',true"
+      ",'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.68"
+      "6274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0"
+      ".16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.274509803921569 1;0.0"
+      "588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalLabel>')),extmgr.Configuration('Too"
+      "ls','Plot Navigation',true,'AutoscaleMode','Auto'),extmgr.Configuration('Tools','Measurements',true,'Version','2"
+      "019a','Measurements',struct('bilevel',struct('StateLevelsSource','Auto','StateLevels',[11.75 49.75],'PercentStat"
+      "eLevelTolerance',2,'PercentReferenceLevels',[10 50 90],'SettlingSeekDuration',0.02,'SettingsPanelOpen',0,'Transi"
+      "tionsPanelOpen',1,'AberrationsPanelOpen',1,'CyclesPanelOpen',0)))),'Version','2019a','Position',[1 1 1536 703.2]"
+      ",'WindowStyle','docked','OpenAtMdlStart',true)"
       NumInputPorts	      "1"
       Floating		      off
     }
     Block {
-      BlockType		      Step
-      Name		      "Step1"
-      SID		      "45"
-      Position		      [205, 25, 235, 55]
-      ZOrder		      655
-      Time		      "0"
-      After		      "50"
-      SampleTime	      "0"
-      Port {
-	PortNumber		1
-	Name			"reference"
+      BlockType		      SubSystem
+      Name		      "Signal Builder"
+      SID		      "25"
+      Tag		      "STV Subsys"
+      Ports		      [0, 2]
+      Position		      [-275, 255, -190, 295]
+      ZOrder		      663
+      CopyFcn		      "sigbuilder_block('copy');"
+      DeleteFcn		      "sigbuilder_block('delete');"
+      LoadFcn		      "sigbuilder_block('load');"
+      ModelCloseFcn	      "sigbuilder_block('modelClose');"
+      PreSaveFcn	      "sigbuilder_block('preSave');"
+      StartFcn		      "sigbuilder_block('start');"
+      PauseFcn		      "sigbuilder_block('pause');"
+      ContinueFcn	      "sigbuilder_block('continue');"
+      StopFcn		      "sigbuilder_block('stop');"
+      NameChangeFcn	      "sigbuilder_block('namechange');"
+      ClipboardFcn	      "sigbuilder_block('clipboard');"
+      OpenFcn		      "sigbuilder_block('open',[5.4 42.6 1141.2 444.6 ]);"
+      CloseFcn		      "sigbuilder_block('close');"
+      RequestExecContextInheritance off
+      MaskHideContents	      on
+      ContentPreviewEnabled   on
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		22
+	$ClassName		"Simulink.Mask"
+	Type			"Sigbuilder block"
+	Description		"Simulink:masks:SigbuilderBlock_MD"
+	Initialization		"if ~strcmp(get_param(bdroot(gcbh),'SimulationStatus'),'stopped') tuvar = sigbuilder_block('maskInit'"
+	"); end"
+	SelfModifiable		"on"
+	Display			"plot(0, 0, 100, 100,[2, 2, 32, 32, 2], [68, 8, 8, 68, 68],[32, 2], [38, 38], [32, 19, 2],[53, 60, 44], [32"
+	", 17, 17, 2],[16, 16, 31, 31]);txt = getActiveGroup(gcbh);text(2, 100, txt,'verticalAlignment', 'top');"
+	IconOpaque		"transparent"
+	IconRotate		"port"
+	Capabilities		"slmaskedcaps(gcbh)"
+	Object {
+	  $PropName		  "Parameters"
+	  $ObjectID		  23
+	  $ClassName		  "Simulink.MaskParameter"
+	  Type			  "edit"
+	  Name			  "tuvar"
+	  Prompt		  ""
+	  Value			  "[0:10]"
+	  Visible		  "off"
+	}
+      }
+      System {
+	Name			"Signal Builder"
+	Location		[480, 85, 980, 386]
+	Open			off
+	PortBlocksUseCompactNotation off
+	SetExecutionDomain	off
+	ExecutionDomainType	"Deduce"
+	ModelBrowserVisibility	on
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	SIDHighWatermark	"8"
+	SimulinkSubDomain	"Simulink"
+	Block {
+	  BlockType		  Demux
+	  Name			  "Demux"
+	  SID			  "25:1"
+	  Tag			  "STV Demux"
+	  Ports			  [1, 2]
+	  Position		  [150, 42, 160, 618]
+	  ZOrder		  -1
+	  Outputs		  "2"
+	}
+	Block {
+	  BlockType		  FromWorkspace
+	  Name			  "FromWs"
+	  SID			  "25:2"
+	  Tag			  "STV FromWs"
+	  Position		  [30, 300, 115, 350]
+	  ZOrder		  -2
+	  VariableName		  "tuvar"
+	  SampleTime		  "0"
+	  ZeroCross		  on
+	  SigBuilderData	  "DataTag0"
+	  VnvData		  "DataTag1"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Signal 1"
+	  SID			  "25:8"
+	  Tag			  "STV Outport"
+	  Position		  [280, 30, 300, 40]
+	  ZOrder		  5
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Signal 2"
+	  SID			  "25:6"
+	  Tag			  "STV Outport"
+	  Position		  [280, 30, 300, 40]
+	  ZOrder		  3
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  2
+	  SrcBlock		  "FromWs"
+	  SrcPort		  1
+	  Points		  [15, 0]
+	  DstBlock		  "Demux"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  10
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  DstBlock		  "Signal 1"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  11
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  DstBlock		  "Signal 2"
+	  DstPort		  1
+	}
       }
     }
     Block {
       BlockType		      Sum
       Name		      "Sum2"
-      SID		      "46"
+      SID		      "22"
       Ports		      [2, 1]
-      Position		      [295, 30, 315, 50]
-      ZOrder		      649
+      Position		      [-80, 265, -60, 285]
+      ZOrder		      656
       ShowName		      off
       IconShape		      "round"
       Inputs		      "|+-"
@@ -1802,9 +1912,9 @@ Model {
     Block {
       BlockType		      TransferFcn
       Name		      "System"
-      SID		      "47"
-      Position		      [615, 24, 730, 56]
-      ZOrder		      652
+      SID		      "23"
+      Position		      [240, 259, 355, 291]
+      ZOrder		      659
       Numerator		      "[25]"
       Denominator	      "[1 10.1 1]"
       Port {
@@ -1814,58 +1924,22 @@ Model {
     Block {
       BlockType		      ZeroOrderHold
       Name		      "Zero-Order\nHold"
-      SID		      "48"
-      Position		      [535, 25, 570, 55]
-      ZOrder		      651
+      SID		      "24"
+      Position		      [160, 260, 195, 290]
+      ZOrder		      658
       SampleTime	      "0.01"
     }
     Line {
-      ZOrder		      47
-      SrcBlock		      "Mux1"
+      ZOrder		      1
+      SrcBlock		      "Zero-Order\nHold"
       SrcPort		      1
-      DstBlock		      "Scope"
+      DstBlock		      "System"
       DstPort		      1
     }
     Line {
-      ZOrder		      50
-      SrcBlock		      "System"
-      SrcPort		      1
-      Points		      [18, 0]
-      Branch {
-	ZOrder			61
-	Points			[0, 108; -448, 0]
-	DstBlock		"Sum2"
-	DstPort			2
-      }
-      Branch {
-	ZOrder			48
-	DstBlock		"Mux1"
-	DstPort			2
-      }
-    }
-    Line {
-      Name		      "reference"
-      ZOrder		      53
-      Labels		      [1, 1]
-      SrcBlock		      "Step1"
-      SrcPort		      1
-      Points		      [33, 0]
-      Branch {
-	ZOrder			52
-	Points			[0, -52; 519, 0; 0, 32]
-	DstBlock		"Mux1"
-	DstPort			1
-      }
-      Branch {
-	ZOrder			51
-	DstBlock		"Sum2"
-	DstPort			1
-      }
-    }
-    Line {
       Name		      "control input"
-      ZOrder		      59
-      Labels		      [0, 0]
+      ZOrder		      5
+      Labels		      [-1, 0]
       SrcBlock		      "FZ-PI Controller"
       SrcPort		      1
       DstBlock		      "Zero-Order\nHold"
@@ -1873,7 +1947,7 @@ Model {
     }
     Line {
       Name		      "error"
-      ZOrder		      57
+      ZOrder		      6
       Labels		      [-1, 1]
       SrcBlock		      "Sum2"
       SrcPort		      1
@@ -1881,12 +1955,161 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      56
-      SrcBlock		      "Zero-Order\nHold"
+      ZOrder		      9
+      SrcBlock		      "System"
       SrcPort		      1
-      DstBlock		      "System"
+      Points		      [18, 0]
+      Branch {
+	ZOrder			55
+	Points			[0, 108; -448, 0]
+	DstBlock		"Sum2"
+	DstPort			2
+      }
+      Branch {
+	ZOrder			34
+	Points			[0, -10]
+	DstBlock		"Mux1"
+	DstPort			2
+      }
+    }
+    Line {
+      ZOrder		      10
+      SrcBlock		      "Mux1"
+      SrcPort		      1
+      DstBlock		      "Scope"
       DstPort		      1
     }
+    Line {
+      ZOrder		      44
+      SrcBlock		      "Manual Switch"
+      SrcPort		      1
+      Points		      [11, 0]
+      Branch {
+	ZOrder			61
+	DstBlock		"Sum2"
+	DstPort			1
+      }
+      Branch {
+	ZOrder			60
+	Points			[0, -52; 521, 0; 0, 22]
+	DstBlock		"Mux1"
+	DstPort			1
+      }
+    }
+    Line {
+      ZOrder		      40
+      SrcBlock		      "Signal Builder"
+      SrcPort		      2
+      DstBlock		      "Manual Switch"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      58
+      SrcBlock		      "Signal Builder"
+      SrcPort		      1
+      DstBlock		      "Manual Switch"
+      DstPort		      1
+    }
+  }
+}
+MatData {
+  NumRecords		  2
+  DataRecord {
+    Tag			    DataTag0
+    Data		    "  %)30     .    . T   8    (     @         %    \"     $    !     0         %  0 %@    $   \"P    9W)I9"
+    "%-E='1I;F<              &-H86YN96QS                  !A>&5S                        8V]M;6]N                     &1"
+    "A=&%3970                   !D871A4V5T261X                :7-697)I9FEC871I;VY6:7-I8FQE '-B;V)J                     "
+    "  .    ,     8    (    !          %    \"     $    \"     0         0  ( ;VX   X    H!0  !@    @    \"          4 "
+    "   (     0    (    !          4 !  *     0   %H   !S=&5P6       <W1E<%D      'E-:6X       !Y36%X        8V]L;W(   "
+    "   &QI;F53='EL90!L:6YE5VED=&@ ;&%B96P      &]U=$EN9&5X           .    .     8    (    !@         %    \"     $    "
+    "!     0         )    \"               #@   #@    &    \"     8         !0    @    !     0    $         \"0    @   "
+    "            X    X    !@    @    &          4    (     0    $    !          D    (            \\/\\.    .     8   "
+    " (    !@         %    \"     $    !     0         )    \"            /!_#@   $@    &    \"     8         !0    @  "
+    "  !     P    $         \"0   !@   #8@7-&E/;F/P          V(%S1I3VYC\\.    ,     8    (    !          %    \"     $ "
+    "   !     0         0  $ +0    X    X    !@    @    &          4    (     0    $    !          D    (            ^#"
+    "\\.    .     8    (    !          %    \"     $    (     0         0    \"    %-I9VYA;\" Q#@   #@    &    \"     8"
+    "         !0    @    !     0    $         \"0    @           #P/PX    X    !@    @    &          4    (     0    $ "
+    "   !          D    (               .    .     8    (    !@         %    \"     $    !     0         )    \"       "
+    "        #@   #@    &    \"     8         !0    @    !     0    $         \"0    @           #P_PX    X    !@    @ "
+    "   &          4    (     0    $    !          D    (            \\'\\.    2     8    (    !@         %    \"     $"
+    "    #     0         )    &    -B!<T:4]N8_          #8@7-&E/;F/PX    P    !@    @    $          4    (     0    $  "
+    "  !         !   0 M    #@   #@    &    \"     8         !0    @    !     0    $         \"0    @           #X/PX  "
+    "  X    !@    @    $          4    (     0    @    !         !     (    4VEG;F%L(#(.    .     8    (    !@         "
+    "%    \"     $    !     0         )    \"             ! #@   -@!   &    \"     (         !0    @    !     @    $   "
+    "      !0 $  D    !    &P   &-H86YN96QS 'E,:6T      &QA8F5L4&]S        #@   #@    &    \"     8         !0    @    "
+    "!     0    $         \"0    @             0 X   !     !@    @    &          4    (     0    (    !          D    0"
+    "            %,       (!+0 X    P    !@    @    $          4    (     0    (    !         !   @!43   #@   #@    &  "
+    "  \"     8         !0    @    !     0    $         \"0    @           #P/PX   !     !@    @    &          4    (  "
+    "   0    (    !          D    0            +D       (!+0 X    P    !@    @    $          4    (     0    (    !    "
+    "     !   @!43   #@   &@\"   &    \"     (         !0    @    !     0    $         !0 $  X    !    8@   &1I<W!4:6UE"
+    "        9&ES<$UO9&4       !M:6Y4:6UE         &UA>%1I;64         869T97)&:6YA;%-T<@!S86UP;&54:6UE     'IE<F]#<F]S<P"
+    "              #@   $     &    \"     8         !0    @    !     @    $         \"0   !                       #1 #@"
+    "   #@    &    \"     8         !0    @    !     0    $         \"0    @           #P/PX    X    !@    @    &      "
+    "    4    (     0    $    !          D    (               .    .     8    (    !@         %    \"     $    !     0 "
+    "        )    \"            #1 #@   $     &    \"     0         !0    @    !    \"P    $         $     L   !%>'1R87"
+    "!O;&%T90      #@   #@    &    \"     8         !0    @    !     0    $         \"0    @               X    P    !@"
+    "    @    $          4    (     0    (    !         !   @!O;@  #@   (@!   &    \"     (         !0    @    !     0 "
+    "   $         !0 $  X    !    .    &%C=&EV941I<W!)9'@ =&EM95)A;F=E      !N86UE             &1I<W!L87E286YG90  #@   "
+    "$     &    \"     8         !0    @    !     @    $         \"0   !              0        / _#@   $     &    \"   "
+    "  8         !0    @    !     @    $         \"0   !                       #1 #@   #@    &    \"     0         !0  "
+    "  @    !    !P    $         $     <   !'<F]U<\" Q  X   !     !@    @    &          4    (     0    (    !         "
+    " D    0                       T0 X    X    !@    @    &          4    (     0    $    !          D    (           "
+    " \\#\\.    .     8    (    !@         %    \"     $    !     0         )    \"               #@   (     &    \"   "
+    " !$          0         !  0 34-/4P$    (    4VEG4W5I=&4.    2     8    (    #0         %    \"     8    !     0   "
+    "      &    &        -T\"     0    $    !     P    X   \"8#   !@    @    )          4    (     0   &@,   !         "
+    " (   !H#     %)30     .    R L   8    (     @         %    \"     $    !     0         %  0 !0    $    %    34-/4P"
+    "     .    @ L   8    (    $0         !          $ ! !-0T]3 0    T   !&:6QE5W)A<'!E<E]?    #@   $ +   &    \"     $"
+    "         !0    @    .     0    $         #@   % \"   &    \"     D         !0    @    @ @   0    $          @   \""
+    " \"   #    #0   +    #P    \\    &@!  #X 0  ( (             1W)O=7!S $YA;64 4VEG;F%L<P!81&%T80!91&%T80!3:6=3=6ET95"
+    "-I9VYA; !5<V5R1&%T80!4:6UE4F%N9V4 4VEG4W5I=&5'<F]U< !!8W1I=F53:6=N86P 4F5Q=6ER96UE;G1);F9O %-I9U-U:71E $%C=&EV94=R"
+    ";W5P                                    !@                    D                    ,                              "
+    "                 #                     0    0    \"                     @    ,    !                     P    $    "
+    "!                    !     (               $    !     0    D    #     @    $          P    $    '    \"     $    ("
+    "     P    (    !     0    0    !     @    4    !     P    ,    \"     0    0    $     0    4    %     0    8      "
+    "                                                   #@         .    .     8    (    !          %    \"     $    '  "
+    "   0         0    !P   $=R;W5P(#$ #@   #@    &    \"     0         !0    @    !    \"     $         $     @   !3:6"
+    "=N86P@,0X   !@    !@    @    &          4    (     0    8    !          D    P                       40        !1 "
+    "        )$         D0        #1 #@   &     &    \"     8         !0    @    !    !@    $         \"0   #          "
+    "  !)0        $E         -$         T0        $1         1$ .    .     8    (    !          %    \"     $    (     "
+    "0         0    \"    %-I9VYA;\" R#@   %     &    \"     8         !0    @    !    !     $         \"0   \"        "
+    "               !1         )$         T0 X   !0    !@    @    &          4    (     0    0    !          D    @    "
+    "                  !)0        $E            .    4     8    (    #0         %    \"     <    !     0         &    '"
+    "        -T\"     0    (    #    !     $         #@   $     &    \"     8         !0    @    !     @    $         \""
+    "0   !                       #1 #@   $@    &    \"     T         !0    @    &     0    $         !@   !@       #= @"
+    "    $    !     @    (    .    0     8    (    #          %    \"     0    !     0         %    $                  "
+    "        .    . 4   8    (     0         %    \"     0    !     0         .    .     8    (     @         %    \"  "
+    "   $          0         %  0  0    $         #@   $ !   &    \"     (         !0    @    !     0    $         !0 $"
+    "  D    !    )    $YA;64      %A$871A     %E$871A     %5S97)$871A       .    ,     8    (    !          %    \"    "
+    "            0         0          X    P    !@    @    &          4    (               !          D         #@   # "
+    "    &    \"     8         !0    @               $         \"0         .    ,     8    (    !@         %    \"     "
+    "           0         )          X    0 @  !@    @    \"          4    (     0    $    !          4 !  0     0   & "
+    "   !.86UE                4VEG;F%L<P           $%C=&EV95-I9VYA;     !297%U:7)E;65N=$EN9F\\ 57-E<D1A=&$          %1I"
+    ";65286YG90         .    ,     8    (    !          %    \"                0         0          X   !(    !@    @  "
+    "  -          4    (    !0    $    !          8    4        W0(               $         #@   #     &    \"     8   "
+    "      !0    @               $         \"0         .    ,     8    (    !          %    \"                0        "
+    " 0          X    P    !@    @    &          4    (               !          D         #@   $     &    \"     8    "
+    "     !0    @    !     @    $         \"0   !                       \"1 #@   &@!   &    \"     (         !0    @   "
+    " !     0    $         !0 $  P    !    ,    $YA;64          $=R;W5P<P       $%C=&EV94=R;W5P %5S97)$871A      X    P"
+    "    !@    @    $          4    (               !         !          #@   $@    &    \"     T         !0    @    % "
+    "    0    $         !@   !0       #= @               @         .    .     8    (    !@         %    \"     $    !  "
+    "   0         )    \"            / _#@   #     &    \"     8         !0    @               $         \"0         . "
+    "   B     8    (    \"0         %    \"     $   !8     0         \"    6      !24T     #@   $@    &    \"     (    "
+    "     !0    @    !     0    $         !0 $  4    !    !0   $U#3U,     #@         "
+  }
+  DataRecord {
+    Tag			    DataTag1
+    Data		    "  %)30     .    N ,   8    (     @         %    \"     $    !     0         %  0 $0    $   #,    =F5R:6"
+    "9Y0FQK4&%T:',   !V97)I9GE\";&M(86YD;&5S '9N=DUG<DED>           86-T:79E1W)O=7        !R97%$:7-P4')C;G0      &)L:T1"
+    "I<W!-;V1E        9W)O=7!#;G0           !G<F]U<%)E<4-N=        &=R;W5P1$]/4E-I9       ;6]D96Q(              !B;&]C:"
+    "T@              &]V97)I9&53971T:6YG<P        X    P    !@    @    &          4    (               !          D    "
+    "     #@   #     &    \"     8         !0    @               $         \"0         .    ,     8    (    !@         "
+    "%    \"                0         )          X    X    !@    @    &          4    (     0    $    !          D    ("
+    "            \\#\\.    ,     8    (    !@         %    \"                0         )          X    P    !@    @    "
+    "&          4    (               !          D         #@   #@    &    \"     8         !0    @    !     0    $     "
+    "    \"0    @           #P/PX    P    !@    @    &          4    (               !          D         #@   #     & "
+    "   \"     8         !0    @               $         \"0         .    ,     8    (    !@         %    \"           "
+    "     0         )          X    P    !@    @    &          4    (               !          D         #@   #     &  "
+    "  \"     8         !0    @               $         \"0         "
   }
 }
 #Finite State Machines
@@ -1897,7 +2120,7 @@ Model {
 Stateflow {
   machine {
     id			    1
-    name		    "FuzzyPICon"
+    name		    "FuzzyPIConScenario2"
     sfVersion		    80000015
     firstTarget		    2
   }
