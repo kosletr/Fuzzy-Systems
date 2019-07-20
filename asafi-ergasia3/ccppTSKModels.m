@@ -61,7 +61,7 @@ check_set = check_set * 2 - 1; % Scaled to [-1 , 1]
 
 % Set FIS Options
 opt = genfisOptions('GridPartition');
-opt.NumMembershipFunctions = mfNumber(k) * ones(4,1); % k MF's for each input
+opt.NumMembershipFunctions = mfNumber(k) * ones(size(CCPP,2),1); % k MF's for each input
 opt.InputMembershipFunctionType = ["gbellmf" "gbellmf" "gbellmf" "gbellmf"]; % Bell-shaped
 opt.OutputMembershipFunctionType = outputForm(k); % Constant or Linear
 

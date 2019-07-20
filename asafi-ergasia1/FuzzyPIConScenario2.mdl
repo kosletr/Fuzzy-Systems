@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.7"
+    ComputedModelVersion    "1.8"
     NumModelReferences	    0
     NumTestPointedSignals   3
     TestPointedSignal {
@@ -102,7 +102,7 @@ Model {
 	LoadSaveID		"0"
 	Extents			[1807.0, 873.0]
 	ZoomFactor		[1.4999999999999998]
-	Offset			[-347.01249806880963, 61.466666666666612]
+	Offset			[-347.01249806880963, 61.46666666666664]
       }
       Object {
 	$PropName		"DockComponentsInfo"
@@ -140,9 +140,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Kostas"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 19 13:09:31 2019"
-  RTWModifiedTimeStamp	  485442570
-  ModelVersionFormat	  "1.%<AutoIncrement:7>"
+  LastModifiedDate	  "Sat Jul 20 19:43:21 2019"
+  RTWModifiedTimeStamp	  485552590
+  ModelVersionFormat	  "1.%<AutoIncrement:8>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "disabled"
@@ -1734,25 +1734,28 @@ Model {
       Position		      [500, 237, 530, 273]
       ZOrder		      660
       ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extm"
-      "gr.Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('S"
-      "ources','WiredSimulink',true),extmgr.Configuration('Visuals','Time Domain',true,'SerializedDisplays',{struct('Mi"
-      "nYLimReal','-6.4321','MaxYLimReal','57.88888','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.88888','Le"
-      "gendVisibility','Off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.6862"
-      "74509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.62352"
-      "9411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.71764"
-      "7058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalL"
-      "abel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'Manual Switch','Sys"
-      "tem'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-6.4321','MaxYLimReal'"
-      ",'57.88888','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.88888','LegendVisibility','Off','XGrid',true"
-      ",'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.68"
-      "6274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0"
-      ".16078431372549;0.392156862745098 0.831372549019608 0.0745098039215686;0.717647058823529 0.274509803921569 1;0.0"
-      "588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Title','%<SignalLabel>')),extmgr.Configuration('Too"
-      "ls','Plot Navigation',true,'AutoscaleMode','Auto'),extmgr.Configuration('Tools','Measurements',true,'Version','2"
-      "019a','Measurements',struct('bilevel',struct('StateLevelsSource','Auto','StateLevels',[11.75 49.75],'PercentStat"
-      "eLevelTolerance',2,'PercentReferenceLevels',[10 50 90],'SettlingSeekDuration',0.02,'SettingsPanelOpen',0,'Transi"
-      "tionsPanelOpen',1,'AberrationsPanelOpen',1,'CyclesPanelOpen',0)))),'Version','2019a','Position',[1 1 1536 703.2]"
-      ",'WindowStyle','docked','OpenAtMdlStart',true)"
+      "gr.Configuration('Core','General UI',true,'FigureColor',[0.941176470588235 0.941176470588235 0.941176470588235])"
+      ",extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources','WiredSimulink',true),extmgr.Confi"
+      "guration('Visuals','Time Domain',true,'SerializedDisplays',{struct('MinYLimReal','-6.40558','MaxYLimReal','57.65"
+      "021','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.65021','LegendVisibility','Off','XGrid',true,'YGrid"
+      "',true,'PlotMagPhase',false,'AxesColor',[1 1 1],'AxesTickColor',[0 0 0],'ColorOrder',[0 0.447058823529412 0.7411"
+      "76470588235;0.850980392156863 0.325490196078431 0.0980392156862745;0.929411764705882 0.694117647058824 0.1254901"
+      "96078431;0.494117647058824 0.184313725490196 0.556862745098039;0.466666666666667 0.674509803921569 0.18823529411"
+      "7647;0.301960784313725 0.745098039215686 0.933333333333333;0.635294117647059 0.0784313725490196 0.18431372549019"
+      "6],'Title','%<SignalLabel>','LinePropertiesCache',{{struct('Color',[1 0 1],'LineStyle','-','LineWidth',1.5,'Mark"
+      "er','none','Visible','on'),struct('Color',[0.0745098039215686 0.623529411764706 1],'LineStyle','-','LineWidth',1"
+      ".5,'Marker','none','Visible','on')}},'UserDefinedChannelNames',{{}},'NumLines',2,'LineNames',{{'Manual Switch','"
+      "System'}},'ShowContent',true,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-6.40558','MaxYLimR"
+      "eal','57.65021','YLabelReal','','MinYLimMag','0.00000','MaxYLimMag','57.65021','LegendVisibility','Off','XGrid',"
+      "true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[1 1 1],'AxesTickColor',[0 0 0],'ColorOrder',[1 1 0.066666666"
+      "6666667;0.0745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.83137254"
+      "9019608 0.0745098039215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.6"
+      "50980392156863],'Title','%<SignalLabel>')),extmgr.Configuration('Tools','Plot Navigation',true,'AutoscaleMode','"
+      "Auto'),extmgr.Configuration('Tools','Measurements',true,'Version','2019a','Measurements',struct('traceselector',"
+      "struct('Line',1),'bilevel',struct('StateLevelsSource','Auto','StateLevels',[20.15 39.95],'PercentStateLevelToler"
+      "ance',2,'PercentReferenceLevels',[10 50 90],'SettlingSeekDuration',0.02,'SettingsPanelOpen',0,'TransitionsPanelO"
+      "pen',1,'AberrationsPanelOpen',1,'CyclesPanelOpen',0)))),'Version','2019a','Position',[1 1 1536 703.2],'WindowSty"
+      "le','docked','OpenAtMdlStart',true)"
       NumInputPorts	      "1"
       Floating		      off
     }
