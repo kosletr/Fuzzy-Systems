@@ -199,7 +199,7 @@ title('3D Plot of All Model Errors for different Features and Rules');
 
 SavePlot('3Dplot_Mean_Error');
 
-%% Best Model Decision
+%% Optimum Model Decision
 
 % The one with the minimum mean error
 [~,MinIndices]=min(MeanModelError);
@@ -208,7 +208,7 @@ SavePlot('3Dplot_Mean_Error');
 features_number = NF(MinIndices(1));
 rules_number = NR(MinIndices(2));
 
-% Inform the user about the best model
+% Inform the user about the optimum model
 disp(['The Model with the minimum Error is Model ',num2str(ModelNum)]);
 disp(['Number of Features : ',num2str(features_number)]);
 disp(['Number of Rules : ',num2str(rules_number)]) ;
@@ -216,8 +216,8 @@ disp(['Number of Rules : ',num2str(rules_number)]) ;
 % Feature columns used (ReleifF)
 features_indices = sort(ranks(1:features_number));
 
-% Save Best Model Specs
-save('best_model.mat','features_number','rules_number','features_indices')
+% Save Optimum Model Specs
+save('optimum_model.mat','features_number','rules_number','features_indices')
 
 % Display Elasped Time
 toc
