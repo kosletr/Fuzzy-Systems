@@ -17,7 +17,7 @@ tic
             
 % Load the Dataset
 load superconduct.csv
-load('bestModel.mat')
+load('optimumModel.mat')
 superconduct = superconduct(:,[features_indices ,end]);
 
 %% Shuffle the Data of the Dataset
