@@ -66,9 +66,24 @@ training_set = shuffleSet(training_set);
 validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
+% %% Data Normalization
+% 
+% % Find min and max of the training set
+% training_set_min = min(training_set(:));
+% training_set_max = max(training_set(:));
+% 
+% % Normalize training set
+% training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize validation set based on the training set data
+% validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize check set based on the training set data
+% check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+
 %% Data Normalization (Normalize each feautre separately)
 
-for i = 1 : size(training_set, 2) - 1 % for every feature
+for i = 1 : size(training_set, 2) % for every feature
     
     % Find min and max of the feature
     training_set_min = min(training_set(:, i));
@@ -76,16 +91,13 @@ for i = 1 : size(training_set, 2) - 1 % for every feature
     
     % Normalize training set
     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
     
     % Normalize validation set based on the training set data
     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
     
     % Normalize check set based on the training set data
     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-
+    
 end
 
 %% Train 5 TSK Models

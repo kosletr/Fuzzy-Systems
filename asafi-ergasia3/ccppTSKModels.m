@@ -39,29 +39,45 @@ training_set = CCPP(1 : round(0.6*size(CCPP,1)), :); % 60% will be used for trai
 validation_set = CCPP(round(0.6*size(CCPP,1))+1 : round(0.8 * size(CCPP,1)), :); % 20% will be used for validation
 check_set = CCPP(round(0.8*size(CCPP,1))+1 : end, :); % 20% will be used for testing
 
-%% Data Normalization
+% %% Data Normalization
+% 
+% % Find min and max of the training set
+% training_set_min = min(training_set(:));
+% training_set_max = max(training_set(:));
+% 
+% % Normalize training set
+% training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize validation set based on the training set data
+% validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize check set based on the training set data
+% check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
 
-% Find min and max of the training set
-training_set_min = min(training_set(:));
-training_set_max = max(training_set(:));
+%% Data Normalization (Normalize each feautre separately)
 
-% Normalize training set
-training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-training_set = training_set * 2 - 1; % Scaled to [-1 , 1]
-
-% Normalize validation set based on the training set data
-validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-validation_set = validation_set * 2 - 1; % Scaled to [-1 , 1]
-
-% Normalize check set based on the training set data
-check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-check_set = check_set * 2 - 1; % Scaled to [-1 , 1]
+for i = 1 : size(training_set, 2) % for every feature
+    
+    % Find min and max of the feature
+    training_set_min = min(training_set(:, i));
+    training_set_max = max(training_set(:, i));
+    
+    % Normalize training set
+    training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+    
+    % Normalize validation set based on the training set data
+    validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+   
+    % Normalize check set based on the training set data
+    check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+   
+end
 
 %% FIS Generation
 
 % Set FIS Options
 opt = genfisOptions('GridPartition');
-opt.NumMembershipFunctions = mfNumber(k) * ones(size(CCPP,2),1); % k MF's for each input
+opt.NumMembershipFunctions = mfNumber(k) * ones(size(CCPP,2)-1,1); % k MF's for each input
 opt.InputMembershipFunctionType = ["gbellmf" "gbellmf" "gbellmf" "gbellmf"]; % Bell-shaped
 opt.OutputMembershipFunctionType = outputForm(k); % Constant or Linear
 
