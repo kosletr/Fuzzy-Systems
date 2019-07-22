@@ -21,7 +21,7 @@ tic
 load avila.txt
 
 % Cluster Radius parameter for Subtractive Clustering Algorithm
-radius = [0.3;0.4;0.5;0.6] ;
+radius = [0.4;0.5;0.6;0.7;0.8] ;
 % Number of Rules produced by Subtractive Clustering Algorithm
 NR = zeros(size(radius,1),1);
 
@@ -81,24 +81,24 @@ check_set = shuffleSet(check_set);
 % % Normalize check set based on the training set data
 % check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
 
-%% Data Normalization (Normalize each feautre separately)
-
-for i = 1 : size(training_set, 2) % for every feature
-    
-    % Find min and max of the feature
-    training_set_min = min(training_set(:, i));
-    training_set_max = max(training_set(:, i));
-    
-    % Normalize training set
-    training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-    % Normalize validation set based on the training set data
-    validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-    % Normalize check set based on the training set data
-    check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-end
+% %% Data Normalization (Normalize each feautre separately)
+% 
+% for i = 1 : size(training_set, 2) % for every feature
+%     
+%     % Find min and max of the feature
+%     training_set_min = min(training_set(:, i));
+%     training_set_max = max(training_set(:, i));
+%     
+%     % Normalize training set
+%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+%     % Normalize validation set based on the training set data
+%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+%     % Normalize check set based on the training set data
+%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+% end
 
 %% Train 5 TSK Models
 
@@ -115,7 +115,7 @@ for m = 1 : length(NR)
     
     for i = 1 : length(InitialFIS.output.mf)
         InitialFIS.output.mf(i).type = 'constant';
-        %InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
     
     % Plot Inital Membership Functions
@@ -213,7 +213,7 @@ toc
 function sorted = sortDataset(dataset)
 
 [~,idx] = sort(dataset(:,end));
-sorted = dataset(idx,:);
+sorted = unique( dataset(idx,:) ,'rows','stable');
 
 end
 

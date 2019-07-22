@@ -90,24 +90,24 @@ check_set = shuffleSet(check_set);
 % % Normalize check set based on the training set data
 % check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
 
-%% Data Normalization (Normalize each feautre separately)
-
-for i = 1 : size(training_set, 2) % for every feature
-    
-    % Find min and max of the feature
-    training_set_min = min(training_set(:, i));
-    training_set_max = max(training_set(:, i));
-    
-    % Normalize training set
-    training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-    % Normalize validation set based on the training set data
-    validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-    % Normalize check set based on the training set data
-    check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    
-end
+% %% Data Normalization (Normalize each feautre separately)
+% 
+% for i = 1 : size(training_set, 2) % for every feature
+%     
+%     % Find min and max of the feature
+%     training_set_min = min(training_set(:, i));
+%     training_set_max = max(training_set(:, i));
+%     
+%     % Normalize training set
+%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+%     % Normalize validation set based on the training set data
+%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+%     % Normalize check set based on the training set data
+%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     
+% end
 
 %% ReliefF Algorithm
 % Evaluate feature's importance using Relieff Algorithm
@@ -300,7 +300,7 @@ toc
 function sorted = sortDataset(dataset)
 
 [~,idx] = sort(dataset(:,end));
-sorted = dataset(idx,:);
+sorted = unique( dataset(idx,:) ,'rows','stable');
 
 end
 

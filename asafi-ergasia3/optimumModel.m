@@ -40,27 +40,27 @@ training_set = shuffledData(1 : round(0.6*size(shuffledData,1)), :); % 60% will 
 validation_set = shuffledData(round(0.6*size(shuffledData,1))+1 : round(0.8 * size(shuffledData,1)), :); % 20% will be used for validation
 check_set = shuffledData(round(0.8*size(shuffledData,1))+1 : end, :); % 20% will be used for testing
 
-%% Data Normalization (Normalize each feautre separately)
-
-for i = 1 : size(training_set, 2) - 1 % for every feature
-    
-    % Find min and max of the feature
-    training_set_min = min(training_set(:, i));
-    training_set_max = max(training_set(:, i));
-    
-    % Normalize training set
-    training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-    
-    % Normalize validation set based on the training set data
-    validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-    
-    % Normalize check set based on the training set data
-    check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-    check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-
-end
+% %% Data Normalization (Normalize each feautre separately)
+% 
+% for i = 1 : size(training_set, 2) - 1 % for every feature
+%     
+%     % Find min and max of the feature
+%     training_set_min = min(training_set(:, i));
+%     training_set_max = max(training_set(:, i));
+%     
+%     % Normalize training set
+%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+%     
+%     % Normalize validation set based on the training set data
+%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+%     
+%     % Normalize check set based on the training set data
+%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+%     check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
+% 
+% end
 
 
 %% FIS Generation

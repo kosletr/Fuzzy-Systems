@@ -39,20 +39,20 @@ training_set = CCPP(1 : round(0.6*size(CCPP,1)), :); % 60% will be used for trai
 validation_set = CCPP(round(0.6*size(CCPP,1))+1 : round(0.8 * size(CCPP,1)), :); % 20% will be used for validation
 check_set = CCPP(round(0.8*size(CCPP,1))+1 : end, :); % 20% will be used for testing
 
-%% Data Normalization
-
-% Find min and max of the training set
-training_set_min = min(training_set(:));
-training_set_max = max(training_set(:));
-
-% Normalize training set
-training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-
-% Normalize validation set based on the training set data
-validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-
-% Normalize check set based on the training set data
-check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% %% Data Normalization
+% 
+% % Find min and max of the training set
+% training_set_min = min(training_set(:));
+% training_set_max = max(training_set(:));
+% 
+% % Normalize training set
+% training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize validation set based on the training set data
+% validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
+% 
+% % Normalize check set based on the training set data
+% check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
 
 % %% Data Normalization (Normalize each feautre separately)
 % 
@@ -99,7 +99,7 @@ anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 250, 'DisplayA
 [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
 
 % Evaluate the trained FIS
-y_hat = evalfis(check_set(:,1:end-1),chkFIS);
+y_hat = evalfis(check_set(:,1:end-1),trnFIS);
 y = check_set(:,end);
 
 %% Metrics Calculation

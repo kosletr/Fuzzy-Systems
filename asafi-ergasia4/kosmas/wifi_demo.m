@@ -11,7 +11,7 @@ close all;
 fprintf('\n *** begin %s ***\n\n', mfilename);
 
 %% READ DATA
-load wifi-localization.dat
+load wifi_localization.txt
 % 2000 instances with 7 features each
 data = wifi_localization;
 NR = [4 8 12 16]; % number of rules
@@ -119,7 +119,7 @@ for r = 1 : length(NR)
     xlabel('x');
     ylabel('Degree of membership');
     fullFileName = sprintf('%d/input_MF_before_training.png', r);
-    saveas(gcf, fullFileName);
+    %% saveas(gcf, fullFileName);
  
     % Tune the fis
     fprintf('\n *** Tuning the FIS\n');
@@ -189,7 +189,7 @@ for r = 1 : length(NR)
     xlabel('x');
     ylabel('Degree of membership');
     fullFileName = sprintf('%d/input_MF_after_training.png', r);
-    saveas(gcf, fullFileName);
+   % % saveas(gcf, fullFileName);
  
     figure;
     plot(1:length(trainError), trainError, 1:length(trainError), chkError);
@@ -198,7 +198,7 @@ for r = 1 : length(NR)
     ylabel('Error');
     legend('Training Set', 'Check Set');
     fullFileName = sprintf('%d/learning_curve.png', r);
-    saveas(gcf, fullFileName);
+    %% saveas(gcf, fullFileName);
  
 end
 
@@ -207,13 +207,13 @@ figure;
 bar(NR(1:length(NR)), overall_acc);
 title('Overall accuracy with regards to number of rules');
 xlabel('Number of rules');
-saveas(gcf, 'overall_accuracy.png');
+% saveas(gcf, 'overall_accuracy.png');
 
 figure;
 bar(NR(1:length(NR)), k);
 title('k value with regards to number of rules');
 xlabel('Number of rules');
-saveas(gcf, 'k_value.png');
+% saveas(gcf, 'k_value.png');
 
 save('error_matrices', 'error_matrices');
 save('overall_acc', 'overall_acc');
