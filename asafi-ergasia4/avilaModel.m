@@ -21,7 +21,12 @@ tic
 load avila.txt
 
 % Cluster Radius parameter for Subtractive Clustering Algorithm
-radius = [0.4;0.5;0.6;0.7;0.8] ;
+radius = [0.8 0.8 0.3 0.7 0.5]';
+
+% Squash Factor - genfis option 
+% (Number of Clusters-Rules respectively: 4 8 12 16 20)
+sqFactor=[0.5 0.45 0.475 0.4 0.432]';
+
 % Number of Rules produced by Subtractive Clustering Algorithm
 NR = zeros(size(radius,1),1);
 
@@ -37,6 +42,15 @@ tbl = tabulate(avila(:,end));
 
 % Sort the dataset based on the diferrent output values
 sortedAvila = sortDataset(avila);
+
+% Uncomment the next two code-lines to improve the training proccess due to 
+% the class imbalance issue. Add duplicates of data where needed, so as to 
+% have almost equal number of data for every class.
+% Example: The First class has 8700 data while the Second Class has only 10 data.
+% In order to solve this imbalance we make copies of the data of the Second class 870 times.
+
+% sortedAvila = BallanceDataset(tbl,sortedAvila);
+% tbl = tabulate(sortedAvila(:,end));
 
 %% Split the Dataset
 
@@ -105,7 +119,7 @@ check_set = shuffleSet(check_set);
 for m = 1 : length(NR)
     
     % Set Subtractive Clustering Options
-    genfis_opt = genfisOptions('SubtractiveClustering','ClusterInfluenceRange',radius(m),'Verbose',0);
+    genfis_opt = genfisOptions('SubtractiveClustering','ClusterInfluenceRange',radius(m),'SquashFactor',sqFactor(m),'Verbose',0);
     
     % Generate the FIS
     InitialFIS = genfis(training_set(:,1:end-1), training_set(:,end), genfis_opt);
@@ -115,7 +129,7 @@ for m = 1 : length(NR)
     
     for i = 1 : length(InitialFIS.output.mf)
         InitialFIS.output.mf(i).type = 'constant';
-%         InitialFIS.output.mf(i).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        InitialFIS.output.mf(i).params = rand()*10;
     end
     
     % Plot Inital Membership Functions
@@ -214,6 +228,31 @@ function sorted = sortDataset(dataset)
 
 [~,idx] = sort(dataset(:,end));
 sorted = unique( dataset(idx,:) ,'rows','stable');
+
+end
+
+%% Function to comfront class imbalance issue (Long Delay)
+function [Arr,tbl] = BallanceDataset(tbl,sortedArr)
+
+maxCount = max(tbl(:,2));
+tempArr = cell(length(tbl),1);
+count = 1;
+col = sortedArr(1,end);
+for i = 1:length(sortedArr)
+    if(col ~= sortedArr(i,end))
+       count = 1; 
+    end
+   col = sortedArr(i,end);
+   tempArr{col}(count,:) = sortedArr(i,:);
+   count = count + 1;
+end
+
+Arr = double.empty(0,size(sortedArr,2));
+for i = 1:length(tbl)
+    for j = 1:round(maxCount/size(tempArr{i},1))
+        Arr = cat(1,Arr,tempArr{i});
+    end
+end
 
 end
 
