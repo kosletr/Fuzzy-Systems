@@ -132,6 +132,13 @@ for f = 1 : length(NF)
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
             
+            % Ensure that there are only nonzero gauss sigma parameters
+            for j = 1 : length(InitialFIS.Input)
+                for k = 1 : length(InitialFIS.Input(j).MF)
+                    InitialFIS.Input(j).MF(k).Params(1) = rand()*5;
+                end
+            end
+            
             % Set the validation data option to avoid overfitting
             anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 150, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
             
@@ -202,11 +209,13 @@ SavePlot('3Dplot_Mean_Error');
 %% Optimum Model Decision
 
 % The one with the minimum mean error
-[~,MinIndices]=min(MeanModelError);
+minMatrix = min(MeanModelError(:));
+[min_row,min_col] = find(MeanModelError==minMatrix);
+
 [~,ModelNum]=min(reshape(MeanModelError',[],1));
 
-features_number = NF(MinIndices(1));
-rules_number = NR(MinIndices(2));
+features_number = NF(min_row);
+rules_number = NR(min_col);
 
 % Inform the user about the optimum model
 disp(['The Model with the minimum Error is Model ',num2str(ModelNum)]);

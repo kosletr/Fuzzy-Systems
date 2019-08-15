@@ -17,14 +17,14 @@ tic
             
 % Load the Dataset
 load ../../isolet.dat %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-load('optimumModel.mat')
+load('optimum_model.mat')
 isolet = isolet(:,[features_indices ,end]);
-
-% Count the different output values
-tbl = tabulate(isolet(:,end));
 
 % Sort the dataset based on the diferrent output values
 sortedIsolet = sortDataset(isolet);
+
+% Count the different output values
+tbl = tabulate(sortedIsolet(:,end));
 
 %% Split the Dataset
 
@@ -50,14 +50,13 @@ proofFunc(tbl,training_set,validation_set,check_set);
 
 %% Shuffle each set separately
 
-shuffledData = shuffleSet(isolet);
 training_set = shuffleSet(training_set);
 validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
 % %% Data Normalization (Normalize each feautre separately)
 % 
-% for i = 1 : size(training_set, 2) - 1 % for every feature
+% for i = 1 : size(training_set, 2) - 1 % for every feature`
 %     
 %     % Find min and max of the feature
 %     training_set_min = min(training_set(:, i));
@@ -86,19 +85,23 @@ genfis_opt = genfisOptions('FCMClustering','NumClusters',rules_number,'Verbose',
 % Generate the FIS
 InitialFIS = genfis(training_set(:, 1:end-1), training_set(:, end), genfis_opt);
 
+for i = 1 : length(InitialFIS.Output.MF)
+    InitialFIS.Output.MF(i).Type = 'constant';
+end
+
 %% Plot some input Membership Functions
 
 numberOfPlots = 4;
 
 InputMembershipFuncPlotter(InitialFIS,numberOfPlots);
 sgtitle('Membership Functions before training');
-savePlot('Best_Model_MF_before_Training');
+SavePlot('Best_Model_MF_before_Training');
 pause(0.01);
 
 %% Train TSK Model
 
 % Set Training Options
-anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 200, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 500, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
 
 % Train generated FIS
 [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
@@ -161,7 +164,7 @@ MetricsPlotter(y,y_hat,trnError,chkError);
 % Plot some trained input Membership Functions
 InputMembershipFuncPlotter(chkFIS,numberOfPlots)
 sgtitle('Best Model - Some Membership Functions after training');
-savePlot(join(['Best_Model_MF_after_Training']));
+SavePlot(join(['Best_Model_MF_after_Training']));
 
 % Display Metrics
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,18 +181,18 @@ figure;
 plot(1:length(y),y,'*r',1:length(y),y_hat, '.b');
 title('Output');
 legend('Reference Outputs','Model Outputs');
-savePlot('Best_Model_Output');
+SavePlot('Best_Model_Output');
 
 figure;
 plot(y - y_hat);
 title('Prediction Errors');
-savePlot('Best_Model_Prediction_Errors');
+SavePlot('Best_Model_Prediction_Errors');
 
 figure;
 plot(1:length(trnError),trnError,1:length(trnError),chkError);
 title('Learning Curve');
 legend('Traning Set', 'Check Set');
-savePlot('Best_Model_Learning_Curve');
+SavePlot('Best_Model_Learning_Curve');
 
 end
 

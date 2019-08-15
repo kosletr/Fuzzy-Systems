@@ -23,12 +23,12 @@ load ../../isolet.dat %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Initializations
 
 % Number of Features
-%NF = [5 10 15 20];
-NF = [5 10]; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+NF = [3 9 16 21];
+% NF = [3 9]; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Number of Rules
-%NR = [4 8 12 16 20];
-NR = [4 8]; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+NR = [4 8 12 16 20];
+% NR = [4 8]; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 MeanModelError = zeros(length(NF), length(NR));
 counter = 1;
@@ -126,8 +126,8 @@ k = 100;
 
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
-%[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k);
-load('ranksMat.mat') %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k);
+%load('ranksMat.mat') %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Grid Search Algorithm
 
@@ -164,9 +164,14 @@ for f = 1 : length(NF)
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
             
-            for j = 1 : length(InitialFIS.output.mf)
-                InitialFIS.output.mf(j).type = 'constant';
-                %InitialFIS.output.mf(j).params = rand(); %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            for j = 1 : length(InitialFIS.Input)
+                for k = 1 : length(InitialFIS.Input(j).MF)
+                    InitialFIS.Input(j).MF(k).Params(1) = rand()*5; % nonzero gauss sigma parameter
+                end
+            end
+            
+            for j = 1 : length(InitialFIS.Output.MF)
+                InitialFIS.Output.MF(j).Type = 'constant';
             end
             
             % Set the validation data option to avoid overfitting
@@ -176,7 +181,7 @@ for f = 1 : length(NF)
             disp(['Model ', num2str(counter), ' of ', num2str(length(NF)*length(NR))]);
             disp(['Number of Features : ',num2str(NF(f))]);
             disp(['Number of Rules : ',num2str(NR(r))]) ;
-            disp(['Fold Number: ',num2str(i)]); 
+            disp(['Fold Number: ',num2str(i)']); 
             fprintf('Initiating FIS Training.. \n\n');
             
             % Train the FIS
@@ -283,11 +288,13 @@ SavePlot('3Dplot_Mean_Error');
 %% Optimum Model Decision
 
 % The one with the minimum mean error
-[~,MinIndices]=min(MeanModelError);
+minMatrix = min(MeanModelError(:));
+[min_row,min_col] = find(MeanModelError==minMatrix);
+
 [~,ModelNum]=min(reshape(MeanModelError',[],1));
 
-features_number = NF(MinIndices(1));
-rules_number = NR(MinIndices(2));
+features_number = NF(min_row);
+rules_number = NR(min_col);
 
 % Inform the user about the Optimum model
 disp(['The Model with the minimum Error is Model ',num2str(ModelNum)]);

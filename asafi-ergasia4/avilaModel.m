@@ -23,7 +23,7 @@ load avila.txt
 % Cluster Radius parameter for Subtractive Clustering Algorithm
 radius = [0.8 0.8 0.3 0.7 0.5]';
 
-% Squash Factor - genfis option 
+% Squash Factor - genfis option
 % (Number of Clusters-Rules respectively: 4 8 12 16 20)
 sqFactor=[0.5 0.45 0.475 0.4 0.432]';
 
@@ -37,14 +37,14 @@ producers_accuracy = cell(1, length(NR));
 users_accuracy = cell(1, length(NR));
 k_hat = zeros(length(NR),1);
 
-% Count the different output values
-tbl = tabulate(avila(:,end));
-
 % Sort the dataset based on the diferrent output values
 sortedAvila = sortDataset(avila);
 
-% Uncomment the next two code-lines to improve the training proccess due to 
-% the class imbalance issue. Add duplicates of data where needed, so as to 
+% Count the different output values
+tbl = tabulate(sortedAvila(:,end));
+
+% Uncomment the next two lines of code to improve the training proccess due to
+% the class imbalance issue. Add duplicates of data where needed, so as to
 % have almost equal number of data for every class.
 % Example: The First class has 8700 data while the Second Class has only 10 data.
 % In order to solve this imbalance we make copies of the data of the Second class 870 times.
@@ -70,7 +70,7 @@ for i = 1 : size(tbl,1)
 end
 
 % Proof that sets are correctly split
-%(Almost the Same Frequency of Outputs in every set)
+% (Almost the Same Frequency of Outputs in every set)
 fprintf("\nProof that sets are correctly split\n\n");
 proofFunc(tbl,training_set,validation_set,check_set);
 
@@ -81,37 +81,37 @@ validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
 % %% Data Normalization
-% 
+%
 % % Find min and max of the training set
 % training_set_min = min(training_set(:));
 % training_set_max = max(training_set(:));
-% 
+%
 % % Normalize training set
 % training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-% 
+%
 % % Normalize validation set based on the training set data
 % validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-% 
+%
 % % Normalize check set based on the training set data
 % check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
 
 % %% Data Normalization (Normalize each feautre separately)
-% 
+%
 % for i = 1 : size(training_set, 2) % for every feature
-%     
+%
 %     % Find min and max of the feature
 %     training_set_min = min(training_set(:, i));
 %     training_set_max = max(training_set(:, i));
-%     
+%
 %     % Normalize training set
 %     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
+%
 %     % Normalize validation set based on the training set data
 %     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
+%
 %     % Normalize check set based on the training set data
 %     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
+%
 % end
 
 %% Train 5 TSK Models
@@ -125,16 +125,18 @@ for m = 1 : length(NR)
     InitialFIS = genfis(training_set(:,1:end-1), training_set(:,end), genfis_opt);
     
     % Number of Rules
-    NR(m) = length(InitialFIS.rule);
-    
-    for i = 1 : length(InitialFIS.output.mf)
-        InitialFIS.output.mf(i).type = 'constant';
-        InitialFIS.output.mf(i).params = rand()*10;
+    NR(m) = length(InitialFIS.Rule);
+        
+    for i = 1 : length(InitialFIS.Output.MF)
+        InitialFIS.Output.MF(i).Type = 'constant';
+%         InitialFIS.Output.MF(i).Params = randi([tbl(1,1) tbl(end,1)]);
     end
     
     % Plot Inital Membership Functions
-    InputMembershipFuncPlotter(InitialFIS,2*length(NR));
+    InputMembershipFuncPlotter(InitialFIS);
     title(['TSK model ', num2str(m), ': Input MF before training']);
+    SavePlot(['TSK', num2str(m), 'InputMFbeforeTraining']);
+    pause(0.01);
     
     %% Train TSK Model
     
@@ -143,7 +145,7 @@ for m = 1 : length(NR)
     fprintf('Initiating FIS Training.. \n\n');
     
     % Set Training Options
-    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 250, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+    anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 500, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
     
     % Train generated FIS
     [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
@@ -197,8 +199,9 @@ for m = 1 : length(NR)
     k_hat(m) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
     
     % Plot Final Membership Functions
-    InputMembershipFuncPlotter(chkFIS,2*length(NR));
+    InputMembershipFuncPlotter(chkFIS);
     title(['TSK model ', num2str(m), ': Input MF after training']);
+    SavePlot(['TSK', num2str(m), 'InputMFafterTraining']);
     
     figure;
     plot(1:length(trnError), trnError, 1:length(trnError), chkError);
@@ -212,7 +215,7 @@ end
 
 %% Plot Metrics
 
-MetricsPlotter(radius,overall_accuracy,k_hat);
+MetricsPlotter(NR,overall_accuracy,k_hat);
 
 %% Save Metrics Information
 
@@ -231,7 +234,7 @@ sorted = unique( dataset(idx,:) ,'rows','stable');
 
 end
 
-%% Function to comfront class imbalance issue (Long Delay)
+%% Function to deal with class imbalance issue (Long Delay)
 function [Arr,tbl] = BallanceDataset(tbl,sortedArr)
 
 maxCount = max(tbl(:,2));
@@ -240,11 +243,11 @@ count = 1;
 col = sortedArr(1,end);
 for i = 1:length(sortedArr)
     if(col ~= sortedArr(i,end))
-       count = 1; 
+        count = 1;
     end
-   col = sortedArr(i,end);
-   tempArr{col}(count,:) = sortedArr(i,:);
-   count = count + 1;
+    col = sortedArr(i,end);
+    tempArr{col}(count,:) = sortedArr(i,:);
+    count = count + 1;
 end
 
 Arr = double.empty(0,size(sortedArr,2));
@@ -304,12 +307,12 @@ end
 end
 
 %% Function used to Plot input Membership Functions of the given FIS
-function InputMembershipFuncPlotter(FIS,MFnumber)
+function InputMembershipFuncPlotter(FIS)
 
 % Plot Membership Functions
 figure;
 
-for i = 1 : MFnumber
+for i = 1 : length(FIS.Input)
     
     [x,mf] = plotmf(FIS,'input',i);
     plot(x,mf);
@@ -322,24 +325,24 @@ xlabel('Inputs');
 end
 
 %% Function used to Plot the Metrics
-function MetricsPlotter(radius,overall_accuracy,k_hat)
+function MetricsPlotter(NR,overall_accuracy,k_hat)
 
 % Plot the Metrics
 
 % Bar Plot - Overall Accuracy metric
 figure;
-bar(radius, overall_accuracy);
+bar(NR, overall_accuracy);
 title('Overall accuracy with regards to number of rules');
-xlabel('Radius');
-SavePlot('overall_accuracy_metric');
+xlabel('Number of Rules');
+% SavePlot('overall_accuracy_metric');
 
 
 % Bar Plot - k_hat metric
 figure;
-bar(radius, k_hat);
+bar(NR, k_hat);
 title('\textbf{ $\hat{k}$ value with regards to number of rules}','interpreter','latex');
-xlabel('Radius');
-SavePlot('k_hat_metric');
+xlabel('Number of Rules');
+% SavePlot('k_hat_metric');
 
 end
 
