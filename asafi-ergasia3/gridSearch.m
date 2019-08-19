@@ -36,12 +36,12 @@ end
 %% Initializations
 
 % Number of Features
-%NF = [5 10 15 20];
-NF = [5 10];
+NF = [5 10 15 20];
+% NF = [5 10];
 
 % Number of Rules
-%NR = [4 8 12 16 20];
-NR = [4 8];
+NR = [4 8 12 16 20];
+% NR = [4 8];
 
 MeanModelError = zeros(length(NF), length(NR));
 counter = 1;
@@ -94,8 +94,8 @@ k = 100;
 
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
-% [ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k);
-load('ranksMat.mat')
+[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k);
+% load('ranksMat.mat')
 
 %% Grid Search Algorithm
 
@@ -132,15 +132,15 @@ for f = 1 : length(NF)
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
             
-            % Ensure that there are only nonzero gauss sigma parameters
-            for j = 1 : length(InitialFIS.Input)
-                for k = 1 : length(InitialFIS.Input(j).MF)
-                    InitialFIS.Input(j).MF(k).Params(1) = rand()*5;
-                end
-            end
-            
+%             % Ensure that there are only nonzero gauss sigma parameters
+%             for j = 1 : length(InitialFIS.Input)
+%                 for k = 1 : length(InitialFIS.Input(j).MF)
+%                     InitialFIS.Input(j).MF(k).Params(1) = rand()*10;
+%                 end
+%             end
+%             
             % Set the validation data option to avoid overfitting
-            anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 150, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
+            anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 250, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
             
             % Inform the User about the current status
             disp(['Model ', num2str(counter), ' of ', num2str(length(NF)*length(NR))]);
