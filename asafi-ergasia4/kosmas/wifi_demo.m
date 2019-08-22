@@ -11,7 +11,7 @@ close all;
 fprintf('\n *** begin %s ***\n\n', mfilename);
 
 %% READ DATA
-load wifi_localization.txt
+load wifi_localization.dat
 % 2000 instances with 7 features each
 data = wifi_localization;
 NR = [4 8 12 16]; % number of rules

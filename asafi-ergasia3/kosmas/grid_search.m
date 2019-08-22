@@ -11,7 +11,7 @@ tic
 fprintf('\n *** begin %s ***\n\n', mfilename);
  
 %% READ DATA
-load Bank.csv
+load Bank.data
 
 %% SHUFFLE DATA
 shuffledBank = zeros(size(Bank));
