@@ -94,7 +94,7 @@ k = 100;
 
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
-[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k);
+[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k, 'method','regression');
 % load('ranksMat.mat')
 
 %% Grid Search Algorithm

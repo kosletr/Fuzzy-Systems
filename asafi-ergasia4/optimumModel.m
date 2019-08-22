@@ -166,8 +166,18 @@ InputMembershipFuncPlotter(chkFIS,numberOfPlots)
 sgtitle('Best Model - Some Membership Functions after training');
 SavePlot(join(['Best_Model_MF_after_Training']));
 
-% Display Metrics
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Display Metrics
+
+% Error Matrix
+error_matrix
+% Overall Accuracy
+overall_accuracy
+% Producer's Accuracy
+producers_accuracy
+% User's Accuracy
+users_accuracy
+% k_hat
+k_hat
 
 % Display Elasped Time
 toc
