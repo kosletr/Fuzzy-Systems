@@ -17,22 +17,22 @@ tic
             
 % Load the Dataset
 load superconduct.csv
-load('optimumModel.mat')
-superconduct = superconduct(:,[features_indices ,end]);
+load('optimum_model.mat')
 
-%% Shuffle the Data of the Dataset
+superconduct = superconduct(:,[features_indices , end]);
+
+%% Shuffle the Dataset
 
 % Initialize an Array with Shuffled Data
 shuffledData = zeros(size(superconduct));
 
 % Array of random Positions
-rand_pos = randperm(length(superconduct)); 
+rand_pos = randperm(length(superconduct));
 
 % New Array with original data randomly distributed
 for i = 1:length(superconduct)
     shuffledData(i, :) = superconduct(rand_pos(i), :);
 end
-
 
 %% Split the Dataset
 
@@ -83,7 +83,7 @@ pause(0.01);
 %% Train TSK Model
 
 % Set Training Options
-anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 200, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 300, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
 
 % Train generated FIS
 [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);

@@ -1,0 +1,19 @@
+The Mean Error for every Model respectively: 
+   1.0e+03 *
+
+    1.3111    1.2163    1.1793    1.1462    1.1201
+    1.2254    1.1687    1.1029    1.0437    1.0432
+    1.1819    1.0985    1.0735    1.0471    1.0284
+    1.1170    1.0300    0.9998    0.9925    0.9832
+
+The Model with the minimum Error is Model 20
+Number of Features : 20
+Number of Rules : 20
+Elapsed time is 69955.109583 seconds.
+
+*******************************************************
+Optimum Results
+*******************************************************
+
+MSE = 223.266271 RMSE = 14.942097 R^2 = 0.813256 NMSE = 0.186680 NDEI = 0.432065
+Elapsed time is 4982.549601 seconds.
