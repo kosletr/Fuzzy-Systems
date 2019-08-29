@@ -151,7 +151,7 @@ for f = 1 : length(NF)
             
             % Train the FIS
             [trnFIS, trainError, ~, InitialFIS, ~] = anfis([training_set_x training_set_y], anfis_opt);
-         
+            
             % Evaluate the FIS
             y_hat = evalfis(validation_set(:, ranks(1:NF(f))), InitialFIS);
             y = validation_set(:, end);

@@ -114,7 +114,7 @@ SStot = sum( (y - mean(y)).^2 );
 R_sqr = 1 - SSres / SStot;
 
 % Calculate NMSE - NDEI
-NMSE = var(y - y_hat) / var(y);
+NMSE = (sum( (y - y_hat).^2 )/length(y)) / var(y);
 NDEI = sqrt(NMSE);
 
 %% Plot Results
