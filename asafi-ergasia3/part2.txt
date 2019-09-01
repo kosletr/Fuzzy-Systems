@@ -15,5 +15,6 @@ Elapsed time is 69955.109583 seconds.
 Optimum Results
 *******************************************************
 
+20-20
 MSE = 223.266271 RMSE = 14.942097 R^2 = 0.813256 NMSE = 0.186680 NDEI = 0.432065
 Elapsed time is 4982.549601 seconds.

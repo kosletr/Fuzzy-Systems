@@ -19,6 +19,14 @@ tic
 load superconduct.csv
 load('optimum_model.mat')
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% f=15;
+% r=16;
+% features_indices = features_indices(1:f);
+% features_number = f;
+% rules_number = r;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 superconduct = superconduct(:,[features_indices , end]);
 
 %% Shuffle the Dataset
@@ -76,14 +84,14 @@ InitialFIS = genfis(training_set(:, 1:end-1), training_set(:, end), genfis_opt);
 numberOfPlots = 4;
 
 InputMembershipFuncPlotter(InitialFIS,numberOfPlots);
-sgtitle('Membership Functions before training');
+sgtitle('Best Model - Some Membership Functions before training');
 savePlot('Best_Model_MF_before_Training');
 pause(0.01);
 
 %% Train TSK Model
 
 % Set Training Options
-anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 300, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 200, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
 
 % Train generated FIS
 [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
