@@ -14,7 +14,7 @@ mkdir Plots
 
 % Count time until completion
 tic
-            
+
 % Load the Dataset
 load ../../isolet.dat %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 load('optimum_model.mat')
@@ -54,29 +54,6 @@ training_set = shuffleSet(training_set);
 validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
-% %% Data Normalization (Normalize each feautre separately)
-% 
-% for i = 1 : size(training_set, 2) - 1 % for every feature`
-%     
-%     % Find min and max of the feature
-%     training_set_min = min(training_set(:, i));
-%     training_set_max = max(training_set(:, i));
-%     
-%     % Normalize training set
-%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-%     
-%     % Normalize validation set based on the training set data
-%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-%     
-%     % Normalize check set based on the training set data
-%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-% 
-% end
-
-
 %% FIS Generation
 
 % Set Fuzzy C-Means Clustering Option
@@ -101,7 +78,7 @@ pause(0.01);
 %% Train TSK Model
 
 % Set Training Options
-anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 500, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
+anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 300, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'ValidationData', validation_set);
 
 % Train generated FIS
 [trnFIS, trnError, stepSize, chkFIS, chkError] = anfis(training_set, anfis_opt);
@@ -126,6 +103,19 @@ N = length(check_set);
 
 % Error Matrix
 error_matrix = confusionmat(y, y_hat);
+
+% Plot Error Matrix
+figure()
+confusionchart(y, y_hat)
+title('Confusion Matrix of Optimum Model');
+SavePlot('Confusion_Matrix');
+pause(0.01);
+
+figure()
+confusionchart(y, y_hat,'Normalization','row-normalized','RowSummary','row-normalized')
+title('Confusion Matrix of Optimum Model - Frequencies');
+SavePlot('Confusion_Matrix_Frequencies');
+pause(0.01);
 
 % Overall Accuracy
 overall_accuracy = sum(diag(error_matrix)) / N;
@@ -168,8 +158,6 @@ SavePlot(join(['Best_Model_MF_after_Training']));
 
 %% Display Metrics
 
-% Error Matrix
-error_matrix
 % Overall Accuracy
 overall_accuracy
 % Producer's Accuracy
@@ -217,7 +205,7 @@ for i=1:numberOfPlots
     subplot(2,2,i);
     plot(x,mf);
     xlabel(['Input' num2str(i)]);
-
+    
 end
 
 end

@@ -16,7 +16,7 @@ mkdir Plots
 tic
 
 fprintf('Preparing Dataset.. \n\n');
-            
+
 % Load the Dataset
 load ../../isolet.dat %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,8 +46,8 @@ tbl = tabulate(isolet(:,end));
 % Sort the dataset based on the diferrent output values
 sortedIsolet = sortDataset(isolet);
 
-% Uncomment the next two code-lines to improve the training proccess due to 
-% the class imbalance issue. Add duplicates of data where needed, so as to 
+% Uncomment the next two code-lines to improve the training proccess due to
+% the class imbalance issue. Add duplicates of data where needed, so as to
 % have almost equal number of data for every class.
 % Example: The First class has 8700 data while the Second Class has only 10 data.
 % In order to solve this imbalance we make copies of the data of the Second class 870 times.
@@ -79,74 +79,54 @@ proofFunc(tbl,training_set,validation_set,check_set);
 
 %% Shuffle each set separately
 
-shuffledData = shuffleSet(isolet);
-training_set = shuffleSet(training_set);
-validation_set = shuffleSet(validation_set);
-check_set = shuffleSet(check_set);
-
-% %% Data Normalization
-% 
-% % Find min and max of the training set
-% training_set_min = min(training_set(:));
-% training_set_max = max(training_set(:));
-% 
-% % Normalize training set
-% training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-% 
-% % Normalize validation set based on the training set data
-% validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-% 
-% % Normalize check set based on the training set data
-% check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-
-% %% Data Normalization (Normalize each feautre separately)
-% 
-% for i = 1 : size(training_set, 2) % for every feature
-%     
-%     % Find min and max of the feature
-%     training_set_min = min(training_set(:, i));
-%     training_set_max = max(training_set(:, i));
-%     
-%     % Normalize training set
-%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
-%     % Normalize validation set based on the training set data
-%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
-%     % Normalize check set based on the training set data
-%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     
-% end
+% shuffledData = shuffleSet(isolet);
+% training_set = shuffleSet(training_set);
+% validation_set = shuffleSet(validation_set);
+% check_set = shuffleSet(check_set);
 
 %% ReliefF Algorithm
 % Evaluate feature's importance using Relieff Algorithm
 
 % k nearest neighbors
-k = 100;
+k = 50;
 
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
-[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k, 'method', 'classification');
-%load('ranksMat.mat') %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% [ranks, ~] = relieff(isolet(:, 1:end - 1), isolet(:, end), k, 'method', 'classification');
+load('ranksMat.mat') %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% save ranksMat.mat ranks
 
 %% Grid Search Algorithm
 
 fprintf('Initiating Grid Search Algorithm.. \n\n');
 
+%% 5-Fold Cross Validation
+
 for f = 1 : length(NF)
     for r = 1 : length(NR)
         
-        %% 5-Fold Cross Validation 
         
-        % Create 5 Folds
-        c = cvpartition(training_set(:, end), 'KFold', 5);
+        fold_train = cell(1,5);
+        fold_test = cell(1,5);
+        test = cell(1,5);
+        
+        % Create 5 Folds - Data in every fold must be fairly distributed
+        for i = 1 : size(tbl,1)
+            singleClass = training_set(training_set(:,end)==tbl(i,1),:);
+            c = cvpartition(singleClass(:, end), 'KFold', 5);
+            for w = 1 : c.NumTestSets
+                fold_train{1,w} = [fold_train{1,w};c.training(w)];
+                fold_test{1,w} = [fold_test{1,w};c.test(w)];
+            end
+        end
+        
         error = zeros(c.NumTestSets, 1);
         
         % For every Fold
         for i = 1 : c.NumTestSets
             
-            train_id = c.training(i);
-            test_id = c.test(i);
+            train_id = logical(fold_train{1,i});
+            test_id = logical(fold_test{1,i});
             
             % 80% of Data for Training (default)
             training_set_x = training_set(train_id, ranks(1:NF(f)));
@@ -155,23 +135,18 @@ for f = 1 : length(NF)
             % 20% of Data for Validation (default)
             validation_data_x = training_set(test_id, ranks(1:NF(f)));
             validation_data_y = training_set(test_id, end);
-           
+            
             %% FIS Generation
             
             % Set Fuzzy C-Means Clustering Options
-            genfis_opt = genfisOptions('FCMClustering','NumClusters',NR(r),'Verbose',0);
+            genfis_opt = genfisOptions('FCMClustering','NumClusters',NR(r),'Verbose',0,'FISType','sugeno');
             
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
             
-            for j = 1 : length(InitialFIS.Input)
-                for k = 1 : length(InitialFIS.Input(j).MF)
-                    InitialFIS.Input(j).MF(k).Params(1) = rand()*5; % nonzero gauss sigma parameter
-                end
-            end
-            
             for j = 1 : length(InitialFIS.Output.MF)
                 InitialFIS.Output.MF(j).Type = 'constant';
+                InitialFIS.Output.MF(j).Params = (tbl(1,1)+tbl(end,1))/2;
             end
             
             % Set the validation data option to avoid overfitting
@@ -181,12 +156,12 @@ for f = 1 : length(NF)
             disp(['Model ', num2str(counter), ' of ', num2str(length(NF)*length(NR))]);
             disp(['Number of Features : ',num2str(NF(f))]);
             disp(['Number of Rules : ',num2str(NR(r))]) ;
-            disp(['Fold Number: ',num2str(i)']); 
+            disp(['Fold Number: ',num2str(i)']);
             fprintf('Initiating FIS Training.. \n\n');
             
             % Train the FIS
-            [trnFIS, trainError, ~, InitialFIS, ~] = anfis([training_set_x training_set_y], anfis_opt);
-         
+            [trnFIS, trainError, ~, InitialFIS, chkError] = anfis([training_set_x training_set_y], anfis_opt);
+            
             % Evaluate the FIS
             y_hat = evalfis(validation_set(:, ranks(1:NF(f))), InitialFIS);
             y = validation_set(:, end);
@@ -201,48 +176,13 @@ for f = 1 : length(NF)
             y_hat(y_hat > limitB) = limitB;
             
             % Calculate Euclidian-Norm Error
-            error(i) = norm(y - y_hat);
-            
+            error(i) = (norm(y-y_hat))^2/length(y);
         end
         
         %% Metrics Calculation
-                
-        % For every model calculate Mean Error of the 5 folds 
+        
+        % For every model calculate Mean Error of the 5 folds
         MeanModelError(f, r) = mean(error);
-        
-        % Total Number of classified values compared to truth values
-        N = length(check_set);
-        
-        % Error Matrix
-        error_matrix{f,r} = confusionmat(y, y_hat);
-        
-        % Overall Accuracy
-        overall_accuracy(f,r) = sum(diag(error_matrix{f,r})) / N;
-        
-        % Producer's Accuracy Initialization
-        PA = zeros(limitB , 1);
-        
-        % User's Accuracy Initialization
-        UA = zeros(limitB , 1);
-        
-        for i = 1 : limitB
-            PA(i) = error_matrix{f,r}(i, i) / sum(error_matrix{f,r}(:, i));
-            UA(i) = error_matrix{f,r}(i, i) / sum(error_matrix{f,r}(i, :));
-        end
-        
-        % Producer's Accuracy
-        producers_accuracy{f,r} = PA;
-        % User's Accuracy
-        users_accuracy{f,r} = UA;
-        
-        % k_hat parameters
-        XirXic = zeros( limitB , 1 );
-        for i = 1 : limitB
-            XirXic(i) = ( sum(error_matrix{f,r}(i,:)) * sum(error_matrix{f,r}(:,i)) ) / N^2 ;
-        end
-        
-        % k_hat
-        k_hat(f,r) = (overall_accuracy(f,r) - sum(XirXic)) / (1 - sum(XirXic));
         
         % Count Total Models
         counter = counter + 1;
@@ -329,11 +269,11 @@ count = 1;
 col = sortedArr(1,end);
 for i = 1:length(sortedArr)
     if(col ~= sortedArr(i,end))
-       count = 1; 
+        count = 1;
     end
-   col = sortedArr(i,end);
-   tempArr{col}(count,:) = sortedArr(i,:);
-   count = count + 1;
+    col = sortedArr(i,end);
+    tempArr{col}(count,:) = sortedArr(i,:);
+    count = count + 1;
 end
 
 Arr = double.empty(0,size(sortedArr,2));

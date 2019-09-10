@@ -80,40 +80,6 @@ training_set = shuffleSet(training_set);
 validation_set = shuffleSet(validation_set);
 check_set = shuffleSet(check_set);
 
-% %% Data Normalization
-%
-% % Find min and max of the training set
-% training_set_min = min(training_set(:));
-% training_set_max = max(training_set(:));
-%
-% % Normalize training set
-% training_set = (training_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%
-% % Normalize validation set based on the training set data
-% validation_set = (validation_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%
-% % Normalize check set based on the training set data
-% check_set = (check_set - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-
-% %% Data Normalization (Normalize each feautre separately)
-%
-% for i = 1 : size(training_set, 2) % for every feature
-%
-%     % Find min and max of the feature
-%     training_set_min = min(training_set(:, i));
-%     training_set_max = max(training_set(:, i));
-%
-%     % Normalize training set
-%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%
-%     % Normalize validation set based on the training set data
-%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%
-%     % Normalize check set based on the training set data
-%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%
-% end
-
 %% Train 5 TSK Models
 
 for m = 1 : length(NR)
@@ -126,10 +92,10 @@ for m = 1 : length(NR)
     
     % Number of Rules
     NR(m) = length(InitialFIS.Rule);
-        
+    
     for i = 1 : length(InitialFIS.Output.MF)
         InitialFIS.Output.MF(i).Type = 'constant';
-%         InitialFIS.Output.MF(i).Params = randi([tbl(1,1) tbl(end,1)]);
+        %         InitialFIS.Output.MF(i).Params = randi([tbl(1,1) tbl(end,1)]);
     end
     
     % Plot Inital Membership Functions
@@ -169,10 +135,23 @@ for m = 1 : length(NR)
     N = length(check_set);
     
     % Error Matrix
-    error_matrix{m} = confusionmat(y, y_hat);
+    error_matrix = confusionmat(y, y_hat);
+    
+    % Plot Error Matrix
+    figure()
+    confusionchart(y, y_hat)
+    title(['Confusion Matrix of Model ' num2str(m)]);
+    SavePlot(['Confusion_Matrix' num2str(m)]);
+    pause(0.01);
+    
+    figure()
+    confusionchart(y, y_hat,'Normalization','row-normalized','RowSummary','row-normalized')
+    title(['Confusion Matrix of Model ' num2str(m) ' - Frequencies']);
+    SavePlot(['Confusion_Matrix_Frequencies' num2str(m)]);
+    pause(0.01);
     
     % Overall Accuracy
-    overall_accuracy(m) = sum(diag(error_matrix{m})) / N;
+    overall_accuracy(m) = sum(diag(error_matrix)) / N;
     
     % Producer's Accuracy Initialization
     PA = zeros(limitB , 1);
@@ -181,24 +160,26 @@ for m = 1 : length(NR)
     UA = zeros(limitB , 1);
     
     for i = 1 : limitB
-        PA(i) = error_matrix{m}(i, i) / sum(error_matrix{m}(:, i));
-        UA(i) = error_matrix{m}(i, i) / sum(error_matrix{m}(i, :));
+        PA(i) = error_matrix(i, i) / sum(error_matrix(:, i));
+        UA(i) = error_matrix(i, i) / sum(error_matrix(i, :));
     end
+    
     % Producer's Accuracy
-    producers_accuracy{m} = PA;
+    producers_accuracy{1,m} = PA;
     % User's Accuracy
-    users_accuracy{m} = UA;
+    users_accuracy{1,m} = UA;
     
     % k_hat parameters
     XirXic = zeros( limitB , 1 );
     for i = 1 : limitB
-        XirXic(i) = ( sum(error_matrix{m}(i,:)) * sum(error_matrix{m}(:,i)) ) / N^2 ;
+        XirXic(i) = ( sum(error_matrix(i,:)) * sum(error_matrix(:,i)) ) / N^2 ;
     end
     
     % k_hat
     k_hat(m) = (overall_accuracy(m) - sum(XirXic)) / (1 - sum(XirXic));
     
-    % Plot Final Membership Functions
+    
+    %% Plot Final Membership Functions
     InputMembershipFuncPlotter(chkFIS);
     title(['TSK model ', num2str(m), ': Input MF after training']);
     SavePlot(['TSK', num2str(m), 'InputMFafterTraining']);
