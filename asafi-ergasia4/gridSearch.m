@@ -77,13 +77,6 @@ end
 fprintf("\nProof that sets are correctly split\n\n");
 proofFunc(tbl,training_set,validation_set,check_set);
 
-%% Shuffle each set separately
-
-% shuffledData = shuffleSet(isolet);
-% training_set = shuffleSet(training_set);
-% validation_set = shuffleSet(validation_set);
-% check_set = shuffleSet(check_set);
-
 %% ReliefF Algorithm
 % Evaluate feature's importance using Relieff Algorithm
 
@@ -135,6 +128,12 @@ for f = 1 : length(NF)
             % 20% of Data for Validation (default)
             validation_data_x = training_set(test_id, ranks(1:NF(f)));
             validation_data_y = training_set(test_id, end);
+            
+            % Shuffle the data inside each fold before training
+            training_set_x = suffleSet(training_set_x);
+            training_set_y = suffleSet(training_set_y);
+            validation_data_x = suffleSet(validation_data_x);
+            validation_data_y = suffleSet(validation_data_y);
             
             %% FIS Generation
             

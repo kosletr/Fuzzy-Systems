@@ -39,7 +39,7 @@ end
  NF = [5 8 10 15];
 
 % Number of Rules
- NR = [4 8 10 12 16];
+ NR = [4 8 10 12 14];
  
 MeanModelError = zeros(length(NF), length(NR));
 counter = 1;
