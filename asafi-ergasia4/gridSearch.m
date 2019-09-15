@@ -203,7 +203,6 @@ for i=1:length(NF)
     subplot(2,2,i);
     bar(MeanModelError(i,:))
     xlabel('Number of Rules');
-    ylabel('Mean Square Error');
     xticklabels(string(NR));
     legend([num2str(NF(i)),' features'])
     
@@ -219,7 +218,6 @@ ylabel('Number of Features');
 yticklabels(string(NF));
 xlabel('Number of Rules');
 xticklabels(string(NR));
-zlabel('Mean square error');
 title('3D Plot of All Model Errors for different Features and Rules');
 
 SavePlot('3Dplot_Mean_Error');
