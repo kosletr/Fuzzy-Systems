@@ -36,10 +36,10 @@ end
 %% Initializations
 
 % Number of Features
- NF = [5 8 10 15];
+NF = [5 8 10 15];
 
 % Number of Rules
- NR = [4 8 10 12 14];
+NR = [4 8 10 12 14];
  
 MeanModelError = zeros(length(NF), length(NR));
 counter = 1;
@@ -58,8 +58,8 @@ k = 100;
 
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
-% [ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k, 'method','regression');
-load('ranksMat.mat')
+[ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k, 'method','regression');
+% load('ranksMat.mat')
 
 %% Grid Search Algorithm
 
@@ -122,8 +122,6 @@ for f = 1 : length(NF)
          
             % Calculate Euclidian-Norm Error
             error(i) = (norm(y-y_hat))^2/length(y);
-            length(y)
-            
         end
         
         % For every model calculate Mean Error of the 5 folds 
@@ -155,7 +153,7 @@ for i=1:length(NF)
     
 end
 
-% SavePlot('Subplots_Mean_Errors');
+SavePlot('Subplots_Mean_Errors');
 
 
 % 3D Plot of All Model Errors
@@ -168,7 +166,7 @@ xticklabels(string(NR));
 zlabel('Mean square error');
 title('3D Plot of All Model Errors for different Features and Rules');
 
-% SavePlot('3Dplot_Mean_Error');
+SavePlot('3Dplot_Mean_Error');
 
 %% Optimum Model Decision
 
@@ -193,8 +191,9 @@ features_indices = sort(ranks(1:features_number));
 save('optimum_model.mat','features_number','rules_number','features_indices')
 
 % Display Elasped Time
-toc
+time = toc;
 
+save('Grid_Search_Data.mat','time','MeanModelError')
 %% Function to automatically save plots in high resolution
 function SavePlot(name)
 
