@@ -16,7 +16,7 @@ mkdir Plots
 tic
 
 % Load the Dataset
-load ../../isolet.dat %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+load isolet.dat
 load('optimum_model.mat')
 isolet = isolet(:,[features_indices ,end]);
 

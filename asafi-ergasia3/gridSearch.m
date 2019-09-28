@@ -59,7 +59,6 @@ k = 100;
 fprintf('Initiating ReleifF Algorithm.. \n\n');
 
 [ranks, ~] = relieff(shuffledData(:, 1:end - 1), shuffledData(:, end), k, 'method','regression');
-% load('ranksMat.mat')
 
 %% Grid Search Algorithm
 
@@ -95,14 +94,7 @@ for f = 1 : length(NF)
             
             % Generate the FIS
             InitialFIS = genfis(training_set_x, training_set_y, genfis_opt);
-            
-%             % Ensure that there are only nonzero gauss sigma parameters
-%             for j = 1 : length(InitialFIS.Input)
-%                 for k = 1 : length(InitialFIS.Input(j).MF)
-%                     InitialFIS.Input(j).MF(k).Params(1) = rand()*10;
-%                 end
-%             end
-%             
+               
             % Set the validation data option to avoid overfitting
             anfis_opt = anfisOptions('InitialFIS', InitialFIS, 'EpochNumber', 250, 'DisplayANFISInformation', 0, 'DisplayErrorValues', 0, 'DisplayStepSize', 0, 'DisplayFinalResults', 0, 'ValidationData', [validation_data_x validation_data_y]);
             
@@ -191,9 +183,8 @@ features_indices = sort(ranks(1:features_number));
 save('optimum_model.mat','features_number','rules_number','features_indices')
 
 % Display Elasped Time
-time = toc;
+toc
 
-save('Grid_Search_Data.mat','time','MeanModelError')
 %% Function to automatically save plots in high resolution
 function SavePlot(name)
 

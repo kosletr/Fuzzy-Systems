@@ -19,14 +19,6 @@ tic
 load superconduct.csv
 load('optimum_model.mat')
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% f=15;
-% r=16;
-% features_indices = features_indices(1:f);
-% features_number = f;
-% rules_number = r;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 superconduct = superconduct(:,[features_indices , end]);
 
 %% Shuffle the Dataset
@@ -48,29 +40,6 @@ training_set = shuffledData(1 : round(0.6*size(shuffledData,1)), :); % 60% will 
 validation_set = shuffledData(round(0.6*size(shuffledData,1))+1 : round(0.8 * size(shuffledData,1)), :); % 20% will be used for validation
 check_set = shuffledData(round(0.8*size(shuffledData,1))+1 : end, :); % 20% will be used for testing
 
-% %% Data Normalization (Normalize each feautre separately)
-% 
-% for i = 1 : size(training_set, 2) - 1 % for every feature
-%     
-%     % Find min and max of the feature
-%     training_set_min = min(training_set(:, i));
-%     training_set_max = max(training_set(:, i));
-%     
-%     % Normalize training set
-%     training_set(:, i) = (training_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     training_set(:, i) = training_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-%     
-%     % Normalize validation set based on the training set data
-%     validation_set(:, i) = (validation_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     validation_set(:, i) = validation_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-%     
-%     % Normalize check set based on the training set data
-%     check_set(:, i) = (check_set(:, i) - training_set_min) / (training_set_max - training_set_min); % Scaled to [0 , 1]
-%     check_set(:, i) = check_set(:, i) * 2 - 1; % Scaled to [-1 , 1]
-% 
-% end
-
-
 %% FIS Generation
 
 % Set Fuzzy C-Means Clustering Option
@@ -85,7 +54,7 @@ numberOfPlots = 4;
 
 InputMembershipFuncPlotter(InitialFIS,numberOfPlots);
 sgtitle('Best Model - Some Membership Functions before training');
-savePlot('Best_Model_MF_before_Training');
+SavePlot('Best_Model_MF_before_Training');
 pause(0.01);
 
 %% Train TSK Model
@@ -123,7 +92,7 @@ MetricsPlotter(y,y_hat,trnError,chkError);
 % Plot some trained input Membership Functions
 InputMembershipFuncPlotter(chkFIS,numberOfPlots)
 sgtitle('Best Model - Some Membership Functions after training');
-savePlot(join(['Best_Model_MF_after_Training']));
+SavePlot(join(['Best_Model_MF_after_Training']));
 
 % Display Metrics
 fprintf('MSE = %f RMSE = %f R^2 = %f NMSE = %f NDEI = %f\n', MSE, RMSE, R_sqr, NMSE, NDEI)
@@ -139,18 +108,18 @@ figure;
 plot(1:length(y),y,'*r',1:length(y),y_hat, '.b');
 title('Output');
 legend('Reference Outputs','Model Outputs');
-savePlot('Best_Model_Output');
+SavePlot('Best_Model_Output');
 
 figure;
 plot(y - y_hat);
 title('Prediction Errors');
-savePlot('Best_Model_Prediction_Errors');
+SavePlot('Best_Model_Prediction_Errors');
 
 figure;
 plot(1:length(trnError),trnError,1:length(trnError),chkError);
 title('Learning Curve');
 legend('Traning Set', 'Check Set');
-savePlot('Best_Model_Learning_Curve');
+SavePlot('Best_Model_Learning_Curve');
 
 end
 
@@ -171,7 +140,7 @@ end
 end
 
 %% Function to automatically save plots in high resolution
-function savePlot(name)
+function SavePlot(name)
 
 % Resize current figure to fullscreen for higher resolution image
 set(gcf, 'Position', get(0, 'Screensize'));
