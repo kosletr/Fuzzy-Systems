@@ -3,7 +3,7 @@
 ### Description
 This collection of scripts was created for the scope of an assignment in a Fuzzy Systems cource of the Aristotle University of Thessaloniki during the 2018-19 academic year. The main purpose of these projects is to demonstrate the implementation of a series of different Fuzzy Systems and compare their efficiency to the corresponding Crisp ones. The systems mentioned conern fields of Control Theory, Neural Networks (Regression and Classification Problems).
 
-### Implementations - Specifications
+### Implementations
 
 #### Part 1 - Control Linear System
 Construction of a typical PI controller and a fuzzy PI controller to control a given linear system. Creation of usefull Graphs to show functionality and stability of the controlled system.
