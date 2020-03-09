@@ -16,7 +16,7 @@ Efficiency comparison between a typical PI controller vs a fuzzy PI controller. 
   
  Typical PI Controller Response       |  Fuzzy PI Controller Response
 :-------------------------:|:-------------------------:
-![](https://github.com/kosletr/Fuzzy-Systems/blob/master/asafi-ergasia1/pics/stepRespFuzzy_Good.jpg) |  ![](https://github.com/kosletr/Fuzzy-Systems/blob/master/asafi-ergasia1/pics/stepRespLinear.jpg)
+![](https://github.com/kosletr/Fuzzy-Systems/blob/master/asafi-ergasia1/pics/stepRespLinear.jpg) |  ![](https://github.com/kosletr/Fuzzy-Systems/blob/master/asafi-ergasia1/pics/stepRespFuzzy_Good.jpg)
   
 #### Part 2 - Car's Fuzzy Controller
 Creation of a Fuzzy Control System to produce appropriate trajectory from different starting angles. The purpose of this implementation is to appropriately define a set of fuzzy rules to avoid a set of obstacles while remaining at the same time not too far from them.
